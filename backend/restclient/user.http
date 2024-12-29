@@ -1,0 +1,77 @@
+### Register new user
+POST http://localhost:3000/users/register
+Content-Type: application/json
+
+{
+  "name": "Mando",
+  "email": "mando@gmail.com",
+  "password": "password",
+  "phone": "9876543210"
+}
+
+
+
+### Login user
+POST http://localhost:3000/users/login
+Content-Type: application/json
+
+{
+  "email": "mando@gmail.com",
+  "password": "password"
+}
+
+
+
+### Get user profile
+GET http://localhost:3000/users/a6718f53-56ab-4642-895c-b5b34e338f1d/profile
+Content-Type: application/json
+
+
+
+### Update user profile
+PUT http://localhost:3000/users/9ab46ec2-b163-4c22-a569-49e48ecd60f2/profile
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "phone": "9983711309",
+  "profilePicture": "https://example.com/image.jpg"
+}
+
+
+### Get all user bookings (events and bikes)
+GET http://localhost:3000/users/9ab46ec2-b163-4c22-a569-49e48ecd60f2/bookings
+Content-Type: application/json
+
+### Get all user reviews
+GET http://localhost:3000/users/9ab46ec2-b163-4c22-a569-49e48ecd60f2/reviews
+Content-Type: application/json
+
+### Deactivate user account
+PUT  http://localhost:3000/users/a6718f53-56ab-4642-895c-b5b34e338f1d/deactivate
+Content-Type: application/json
+
+
+
+
+
+
+# ### Send reset password code (via email)
+# POST http://localhost:3000/users/reset-password/code
+# Content-Type: application/json
+
+# {
+#   "email": "janedoe@example.com"
+# }
+
+
+# ### Reset password
+# POST http://localhost:3000/users/reset-password
+# Content-Type: application/json
+
+# {
+#   "email": "janedoe@example.com",
+#   "resetCode": "123456",
+#   "newPassword": "newsecurepassword"
+# }
+

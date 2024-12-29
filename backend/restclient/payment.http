@@ -1,0 +1,11 @@
+### Make a payment
+POST http://localhost:3000/api/payments/mpesa/1
+Content-Type: application/json
+
+{
+  "amount": 100,
+  "phone_number": "254712345678"
+}
+
+### fetch payment status
+GET http://localhost:3000/api/payments/status/XMSLWOS

@@ -1,0 +1,46 @@
+###Get all available events
+GET http://localhost:3000/events
+Content-Type: application/json
+
+
+
+###Get Details of a Single event
+GET http://localhost:3000/events/fdcf4072-d61d-4321-b5bb-f86384f26bb1
+Content-Type: application/json
+
+
+
+###Add a New Event
+POST http://localhost:3000/events
+Content-Type: application/json
+
+{
+  "title": " Concert",
+  "description": "A night of great music.",
+  "date": "2024-10-10",
+  "time": "19:00",
+  "location": "City Hall",
+  "capacity": 100,
+  "image": "image-url"
+}
+
+
+
+###Update event Information
+PUT http://localhost:3000/events/fdcf4072-d61d-4321-b5bb-f86384f26bb1
+Content-Type: application/json
+
+{
+  "title": "Music Concert",
+  "description": "An unforgettable night of music.",
+  "date": "2024-10-11",
+  "time": "20:00",
+  "location": "Town Hall",
+  "capacity": 2,
+  "image": "updated-image-url"
+}
+
+
+
+###Delete an event
+DELETE http://localhost:3000/events/cf76b5d8-5119-4440-a1ae-e5aca879ad09

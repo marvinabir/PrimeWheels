@@ -1,0 +1,122 @@
+// This is your Prisma schema file for RideChuka.
+// It defines the database models for bike hiring, event management, reviews, and user interactions.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String     @id @default(uuid())
+  name           String
+  email          String     @unique
+  password       String
+  phone          String?    // Optional phone number
+  profilePicture String?    // Optional profile picture
+  role           Role       @default(USER)
+  bookings       Booking[]
+  reviews        Review[]
+  payments       Payment[]
+  resetCode      String?    // Add this for reset password feature
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+}
+
+model Bike {
+  id        String      @id @default(uuid())
+  model     String
+  status    BikeStatus  @default(AVAILABLE)
+  image     String?     // Image of the bike
+  bookings  Booking[]
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+}
+
+model Event {
+  id          String     @id @default(uuid())
+  title       String
+  description String
+  date        String
+  time        String
+  location    String
+  capacity    Int
+  image       String?    // Image for the event
+  bookings    Booking[]
+  reviews     Review[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model Booking {
+  id        String         @id @default(uuid())
+  userId    String
+  user      User           @relation(fields: [userId], references: [id])
+  bikeId    String?        // Bike booking is optional
+  bike      Bike?          @relation(fields: [bikeId], references: [id])
+  eventId   String?        // Event booking is optional
+  event     Event?         @relation(fields: [eventId], references: [id])
+  status    BookingStatus  @default(PENDING)
+  ticket    Ticket?        // Ticket generated after booking
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+}
+
+model Ticket {
+  id           String   @id @default(uuid())
+  bookingId    String   @unique
+  booking      Booking  @relation(fields: [bookingId], references: [id])
+  ticketNumber String   @unique
+  date         String
+  details      String   // Event/bike details
+  createdAt    DateTime @default(now())
+}
+
+model Review {
+  id        String    @id @default(uuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id])
+  eventId   String
+  event     Event     @relation(fields: [eventId], references: [id])
+  rating    Int       // Rating from 1 to 5
+  comment   String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Payment {
+  id        String         @id @default(uuid())
+  userId    String
+  user      User           @relation(fields: [userId], references: [id])
+  amount    Float
+  status    PaymentStatus
+  invoiceId String?        // To track the IntaSend invoice_id
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+}
+
+// Enums
+enum Role {
+  USER
+  ADMIN
+}
+
+enum BikeStatus {
+  AVAILABLE
+  BOOKED
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+}

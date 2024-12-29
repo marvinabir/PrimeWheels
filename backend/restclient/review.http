@@ -1,0 +1,30 @@
+### Get all reviews for an event
+GET http://localhost:3000/api/reviews/fdcf4072-d61d-4321-b5bb-f86384f26bb1
+Content-Type: application/json
+
+
+### Add a review for an event
+POST http://localhost:3000/api/reviews
+Content-Type: application/json
+
+{
+  "userId": "27638c81-84ad-455a-9ece-52a38cb85850",
+  "eventId": "fdcf4072-d61d-4321-b5bb-f86384f26bb1",
+  "rating": 5,
+  "comment": "Amazing event!"
+}
+
+
+### Update a review
+PUT http://localhost:3000/api/reviews/166a432e-8c08-4410-a7fa-92087002e234
+Content-Type: application/json
+
+{
+  "rating": 4,
+  "comment": "Great event but could improve."
+}
+
+
+### Delete a review
+DELETE http://localhost:3000/api/reviews/1a1e0eb0-0464-4ccb-9abf-bf8ce25d406a
+Content-Type: application/json
