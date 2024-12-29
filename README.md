@@ -1,6 +1,6 @@
-# Overdrive Backend
+# PrimeWheels Backend
 
-This is the backend system for rideChuka, a platform for bike hiring, event management, and user interactions. It manages users, bikes, events, bookings, payments, and reviews. 
+This is the backend system for PrimeWheels, a platform for car hiring, event promotion, and user interactions. It manages users, cars, events, bookings, payments, and reviews. 
 
 ## Features:
 - User management (registration, activation, deactivation)
@@ -9,7 +9,7 @@ This is the backend system for rideChuka, a platform for bike hiring, event mana
 - Review and rating system for events
 
 ## Project Structure
-Overdrive-Backend/ ├── prisma/ │ ├── schema.prisma # Prisma schema for database models ├── src/ │ ├── controllers/ # Controllers for handling API requests │ │ ├── admin.controller.ts # Admin controller │ │ ├── payment.controller.ts # Payment controller │ │ └── review.controller.ts # Review controller │ ├── services/ # Business logic services │ │ ├── admin.service.ts # Admin service │ │ ├── payment.service.ts # Payment service │ │ └── review.service.ts # Review service │ ├── routes/ # API routes │ │ ├── admin.router.ts # Admin routes │ │ ├── payment.router.ts # Payment routes │ │ └── review.router.ts # Review routes │ ├── server.ts # Main server file │ └── app.ts # App configuration ├── .env # Environment variables ├── package.json # Node dependencies and scripts ├── README.md # Project documentation └── tsconfig.json # TypeScript configuration
+PrimeWheels-Backend/ ├── prisma/ │ ├── schema.prisma # Prisma schema for database models ├── src/ │ ├── controllers/ # Controllers for handling API requests │ │ ├── admin.controller.ts # Admin controller │ │ ├── payment.controller.ts # Payment controller │ │ └── review.controller.ts # Review controller │ ├── services/ # Business logic services │ │ ├── admin.service.ts # Admin service │ │ ├── payment.service.ts # Payment service │ │ └── review.service.ts # Review service │ ├── routes/ # API routes │ │ ├── admin.router.ts # Admin routes │ │ ├── payment.router.ts # Payment routes │ │ └── review.router.ts # Review routes │ ├── server.ts # Main server file │ └── app.ts # App configuration ├── .env # Environment variables ├── package.json # Node dependencies and scripts ├── README.md # Project documentation └── tsconfig.json # TypeScript configuration
 
 ## Tech Stack:
 - Typescript
@@ -22,4 +22,4 @@ Overdrive-Backend/ ├── prisma/ │ ├── schema.prisma # Prisma schema
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/marvinabir/Overdrive-.git
+   git clone https://github.com/marvinabir/PrimeWheels-.git
