@@ -12,7 +12,7 @@ export class TicketController {
         return res.status(404).json({ error: 'Ticket not found' });
       }
       res.json(ticket);
-    } catch (error) {
+    } catch (error: any) {
       res.status(400).json({ error: error.message });
     }
   }
@@ -22,7 +22,7 @@ export class TicketController {
       const { userId } = req.params;
       const tickets = await ticketService.getTicketsByUserId(userId);
       res.json(tickets);
-    } catch (error) {
+    } catch (error: any) {
       res.status(400).json({ error: error.message });
     }
   }
@@ -31,7 +31,7 @@ export class TicketController {
     try {
       const tickets = await ticketService.getAllTickets();
       res.json(tickets);
-    } catch (error) {
+    } catch (error: any) {
       res.status(400).json({ error: error.message });
     }
   }

@@ -8,7 +8,7 @@ export class UserController {
     try {
       const user = await userService.registerUser(req.body);
       res.status(201).json(user);
-    } catch (error) {
+    } catch (error: any) {
       res.status(400).json({ error: error.message });
     }
   }
@@ -18,7 +18,7 @@ export class UserController {
       const { email, password } = req.body;
       const data = await userService.loginUser(email, password);
       res.json(data);
-    } catch (error) {
+    } catch (error: any) {
       res.status(401).json({ error: error.message });
     }
   }
@@ -28,7 +28,7 @@ export class UserController {
       const { userId, role } = req.body;
       const updatedUser = await userService.assignRole(userId, role);
       res.json(updatedUser);
-    } catch (error) {
+    } catch (error: any) {
       res.status(400).json({ error: error.message });
     }
   }
@@ -37,7 +37,7 @@ export class UserController {
     try {
       await userService.deleteUser(req.params.id);
       res.status(204).send();
-    } catch (error) {
+    } catch (error: any) {
       res.status(400).json({ error: error.message });
     }
   }
@@ -46,7 +46,7 @@ export class UserController {
     try {
       const updatedUser = await userService.deactivateUser(req.params.id);
       res.json(updatedUser);
-    } catch (error) {
+    } catch (error: any) {
       res.status(400).json({ error: error.message });
     }
   }
@@ -55,7 +55,7 @@ export class UserController {
     try {
       const bookings = await userService.getUserBookings(req.params.id);
       res.json(bookings);
-    } catch (error) {
+    } catch (error: any) {
       res.status(400).json({ error: error.message });
     }
   }
@@ -64,7 +64,7 @@ export class UserController {
     try {
       const reviews = await userService.getUserReviews(req.params.id);
       res.json(reviews);
-    } catch (error) {
+    } catch (error: any) {
       res.status(400).json({ error: error.message });
     }
   }
@@ -73,7 +73,7 @@ export class UserController {
     try {
       const user = await userService.getUserProfile(req.params.id);
       res.json(user);
-    } catch (error) {
+    } catch (error: any) {
       res.status(400).json({ error: error.message });
     }
   }
@@ -82,7 +82,7 @@ export class UserController {
     try {
       const updatedUser = await userService.updateUserProfile(req.params.id, req.body);
       res.json(updatedUser);
-    } catch (error) {
+    } catch (error: any) {
       res.status(400).json({ error: error.message });
     }
   }
