@@ -9,7 +9,7 @@ export class ReviewController {
       const { userId, carId, content, rating } = req.body;
       const review = await reviewService.addReview({ userId, carId, content, rating });
       res.status(201).json(review);
-    } catch (error) {
+    } catch (error: any) {
       res.status(400).json({ error: error.message });
     }
   }
@@ -18,7 +18,7 @@ export class ReviewController {
     try {
       const reviews = await reviewService.getAllReviews();
       res.json(reviews);
-    } catch (error) {
+    } catch (error: any) {
       res.status(400).json({ error: error.message });
     }
   }
@@ -27,7 +27,7 @@ export class ReviewController {
     try {
       const review = await reviewService.getReviewById(req.params.id);
       res.json(review);
-    } catch (error) {
+    } catch (error: any) {
       res.status(404).json({ error: error.message });
     }
   }
@@ -36,7 +36,7 @@ export class ReviewController {
     try {
       const reviews = await reviewService.getReviewsByCar(req.params.carId);
       res.json(reviews);
-    } catch (error) {
+    } catch (error: any) {
       res.status(400).json({ error: error.message });
     }
   }
@@ -45,7 +45,7 @@ export class ReviewController {
     try {
       const reviews = await reviewService.getReviewsByUser(req.params.userId);
       res.json(reviews);
-    } catch (error) {
+    } catch (error: any) {
       res.status(400).json({ error: error.message });
     }
   }
@@ -54,7 +54,7 @@ export class ReviewController {
     try {
       await reviewService.deleteReview(req.params.id);
       res.status(204).send();
-    } catch (error) {
+    } catch (error: any) {
       res.status(400).json({ error: error.message });
     }
   }
