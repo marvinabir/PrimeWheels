@@ -8,7 +8,7 @@ export class EventController {
     try {
       const event = await eventService.addEvent(req.body);
       res.status(201).json(event);
-    } catch (error) {
+    } catch (error: any) {
       res.status(400).json({ error: error.message });
     }
   }
@@ -18,7 +18,7 @@ export class EventController {
       const eventId = req.params.id;
       const updatedEvent = await eventService.updateEvent(eventId, req.body);
       res.json(updatedEvent);
-    } catch (error) {
+    } catch (error: any) {
       res.status(400).json({ error: error.message });
     }
   }
@@ -27,7 +27,7 @@ export class EventController {
     try {
       await eventService.deleteEvent(req.params.id);
       res.status(204).send();
-    } catch (error) {
+    } catch (error: any) {
       res.status(400).json({ error: error.message });
     }
   }
@@ -36,7 +36,7 @@ export class EventController {
     try {
       const event = await eventService.getEvent(req.params.id);
       res.json(event);
-    } catch (error) {
+    } catch (error: any) {
       res.status(404).json({ error: error.message });
     }
   }
@@ -45,7 +45,7 @@ export class EventController {
     try {
       const events = await eventService.getAllEvents();
       res.json(events);
-    } catch (error) {
+    } catch (error: any) {
       res.status(400).json({ error: error.message });
     }
   }
