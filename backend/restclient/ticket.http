@@ -1,17 +1,15 @@
 ### Get ticket details by booking ID
-GET http://localhost:3000/api/tickets/f16cea45-cbdc-4bdc-b3be-bb53287d9c8c
+GET http://localhost:3000/api/tickets/booking/cae6b680-2ced-4a0c-b528-761b9c7e08aa
 Content-Type: application/json
 
 
-### Generate a new ticket after booking confirmation
-POST http://localhost:3000/api/tickets/f16cea45-cbdc-4bdc-b3be-bb53287d9c8c
+### Get Tickets by User ID
+GET http://localhost:3000/api/tickets/user/30e4ef59-0799-4051-85e2-6e9044752c4e
 Content-Type: application/json
 
-{
-  "details": "Bike: Mountain Bike, Model XYZ"
-}
 
 
 ### Get all tickets 
 GET http://localhost:3000/api/tickets
 Content-Type: application/json
+

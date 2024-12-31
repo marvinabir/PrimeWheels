@@ -4,17 +4,17 @@ Content-Type: application/json
 
 
 ### Get details of a specific booking
-GET http://localhost:3000/api/bookings/:id
+GET http://localhost:3000/api/bookings/cae6b680-2ced-4a0c-b528-761b9c7e08aa
 Content-Type: application/json
 
 
-### Create a new booking(bike rental only)
+### Create a new car booking
 POST http://localhost:3000/api/bookings
 Content-Type: application/json
 
 {
-  "userId": "d7b7eae3-7435-4fc4-bb25-6b9c4d24ad14",
-  "carId": "51610907-1e7e-437c-b400-c5cfeec4acd8",
+  "userId": "30e4ef59-0799-4051-85e2-6e9044752c4e",
+  "carId": "70a2ca4c-cd53-4f5f-abcb-f0f352f28ea4",
   "startDate": "2024-12-01T10:00:00Z",
   "endDate": "2024-12-05T10:00:00Z",
   "totalAmount": 500
@@ -23,7 +23,7 @@ Content-Type: application/json
 
 
 ### Update booking status
-PUT http://localhost:3000/api/bookings/:id/status
+PUT http://localhost:3000/api/bookings/cae6b680-2ced-4a0c-b528-761b9c7e08aa/status
 Content-Type: application/json
 
 {
@@ -33,13 +33,13 @@ Content-Type: application/json
 
 
 ### Cancel a booking
-PATCH http://localhost:3000/api/bookings/:id/cancel
+PATCH http://localhost:3000/api/bookings/cae6b680-2ced-4a0c-b528-761b9c7e08aa/cancel
 Content-Type: application/json
 
 
 
 ### Manually Update Car Status
-PATCH http://localhost:3000/api/bookings/car/:carId/status
+PATCH http://localhost:3000/api/bookings/car/70a2ca4c-cd53-4f5f-abcb-f0f352f28ea4/status
 Content-Type: application/json
 
 {

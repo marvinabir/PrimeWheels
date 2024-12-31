@@ -22,13 +22,13 @@ Content-Type: application/json
 
 
 ### Get user profile
-GET http://localhost:3000/api/users/d7b7eae3-7435-4fc4-bb25-6b9c4d24ad14/profile
+GET http://localhost:3000/api/users/30e4ef59-0799-4051-85e2-6e9044752c4e/profile
 Content-Type: application/json
 
 
 
 ### Update user profile
-PUT http://localhost:3000/api/users/d7b7eae3-7435-4fc4-bb25-6b9c4d24ad14/profile
+PUT http://localhost:3000/api/users/30e4ef59-0799-4051-85e2-6e9044752c4e/profile
 Content-Type: application/json
 
 {
@@ -40,24 +40,24 @@ Content-Type: application/json
 
 
 ### Get all user bookings (events and bikes)
-GET http://localhost:3000/api/users/d7b7eae3-7435-4fc4-bb25-6b9c4d24ad14/bookings
+GET http://localhost:3000/api/users/30e4ef59-0799-4051-85e2-6e9044752c4e/bookings
 Content-Type: application/json
 
 
 
 ### Get all user reviews
-GET http://localhost:3000/api/users/d7b7eae3-7435-4fc4-bb25-6b9c4d24ad14/reviews
+GET http://localhost:3000/api/users/30e4ef59-0799-4051-85e2-6e9044752c4e/reviews
 Content-Type: application/json
 
 
 ### Deactivate user account
-PATCH http://localhost:3000/api/users/d7b7eae3-7435-4fc4-bb25-6b9c4d24ad14/deactivate
+PATCH http://localhost:3000/api/users/30e4ef59-0799-4051-85e2-6e9044752c4e/deactivate
 Content-Type: application/json
 
 
 
 ### Delete user account
-DELETE http://localhost:3000/api/users/d7b7eae3-7435-4fc4-bb25-6b9c4d24ad14
+DELETE http://localhost:3000/api/users/30e4ef59-0799-4051-85e2-6e9044752c4e
 Content-Type: application/json
 
 
@@ -67,7 +67,7 @@ PUT http://localhost:3000/api/users/assign-role
 Content-Type: application/json
 
 {
-  "userId": "d7b7eae3-7435-4fc4-bb25-6b9c4d24ad14",
+  "userId": "30e4ef59-0799-4051-85e2-6e9044752c4e",
   "role": "admin"
 }
 

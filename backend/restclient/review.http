@@ -11,13 +11,13 @@ Content-Type: application/json
 
 
 ### Get Reviews by Car
-GET http://localhost:3000/api/reviews/car/75e07434-394e-4c93-8b1d-66ab1b512345
+GET http://localhost:3000/api/reviews/car/70a2ca4c-cd53-4f5f-abcb-f0f352f28ea4
 Content-Type: application/json
 
 
 
 ### Get Reviews by User
-GET http://localhost:3000/api/reviews/user/9c9485dc-16a5-4d72-8d2e-034e43f15289
+GET http://localhost:3000/api/reviews/user/30e4ef59-0799-4051-85e2-6e9044752c4e
 Content-Type: application/json
 
 
@@ -27,8 +27,8 @@ POST http://localhost:3000/api/reviews
 Content-Type: application/json
 
 {
-  "userId": "9c9485dc-16a5-4d72-8d2e-034e43f15289",
-  "carId": "75e07434-394e-4c93-8b1d-66ab1b512345",
+  "userId": "30e4ef59-0799-4051-85e2-6e9044752c4e",
+  "carId": "70a2ca4c-cd53-4f5f-abcb-f0f352f28ea4",
   "content": "The car was amazing! Smooth ride.",
   "rating": 5
 }

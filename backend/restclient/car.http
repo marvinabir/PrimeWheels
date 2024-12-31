@@ -5,7 +5,7 @@ Content-Type: application/json
 
 
 ###Get Details of a Single Car
-GET http://localhost:3000/api/cars/:id
+GET http://localhost:3000/api/cars/70a2ca4c-cd53-4f5f-abcb-f0f352f28ea4
 Content-Type: application/json
 
 
@@ -13,38 +13,39 @@ Content-Type: application/json
 POST http://localhost:3000/api/cars
 Content-Type: application/json
 
+
 {
   "name": "Toyota Corolla",
   "brand": "Toyota",
-  "model": "2023",
-  "status": "available",
+  "registrationNumber": "2023",
   "pricePerDay": 100,
-  "image": "https://example.com/toyota-corolla.jpg"
+  "imageUrl": "https://example.com/toyota-corolla.jpg"
 }
 
 
+
 ###Update Car Information
-PUT http://localhost:3000/api/cars/:id
+PUT http://localhost:3000/api/cars/70a2ca4c-cd53-4f5f-abcb-f0f352f28ea4
 Content-Type: application/json
 
 {
   "name": "Toyota Camry",
   "brand": "Toyota",
-  "model": "2023",
+  "registrationNumber": "2023",
+  "pricePerDay": 120,  
   "status": "booked",
-  "pricePerDay": 120,
-  "image": "https://example.com/toyota-camry.jpg"
+  "imageUrl": "https://example.com/toyota-camry.jpg"
 }
 
 
 
 ###Soft Delete a Car
-PUT http://localhost:3000/api/cars/:id/soft-delete
+PUT http://localhost:3000/api/cars/70a2ca4c-cd53-4f5f-abcb-f0f352f28ea4/soft-delete
 Content-Type: application/json
 
 
 ###Delete a Car
-DELETE http://localhost:3000/api/cars/:id
+DELETE http://localhost:3000/api/cars/70a2ca4c-cd53-4f5f-abcb-f0f352f28ea4
 Content-Type: application/json
 
 
