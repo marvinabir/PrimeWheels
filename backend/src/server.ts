@@ -6,8 +6,8 @@ import eventRoutes from './routes/event.routes';
 import bookingRoutes from './routes/booking.routes';
 import ticketRoutes from './routes/ticket.routes';
 import reviewRoutes from './routes/review.routes';
-import adminRoutes from './routes/admin.routes';
-import paymentRoutes from './routes/payment.routes';
+// import adminRoutes from './routes/admin.routes';
+// import paymentRoutes from './routes/payment.routes';
 import userRoutes from './routes/user.routes';
 
 dotenv.config();
@@ -37,8 +37,8 @@ app.use('/api/events', eventRoutes);
 app.use('/api/bookings', bookingRoutes);
 app.use('/api/tickets', ticketRoutes);
 app.use('/api', reviewRoutes);
-app.use('/', adminRoutes);
-app.use('/api', paymentRoutes);
+// app.use('/', adminRoutes);
+// app.use('/api', paymentRoutes);
 app.use('/api/users', userRoutes);
 
 app.listen(PORT, () => {

@@ -1,3 +1,9 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -8,102 +14,103 @@ datasource db {
 }
 
 model User {
-  id              String    @id @default(uuid())
-  name            String
-  email           String    @unique
-  password        String
-  phone           String
-  role            String    @default("user") // user, admin, organizer
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
-  bookings        Booking[]
-  reviews         Review[]
-  notifications   Notification[]
-  events          Event[]    @relation("OrganizerEvents")
+  id            String         @id @default(uuid())
+  name          String
+  email         String         @unique
+  password      String
+  phone         String
+  role          String         @default("user") // user, admin, organizer
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  bookings      Booking[]
+  reviews       Review[]
+  notifications Notification[]
+  events        Event[]        @relation("UserToEvent")
 }
 
 model Car {
-  id              String    @id @default(uuid())
-  name            String
-  brand           String
-  registrationNumber String @unique
-  status          String    @default("available") // available, booked, inactive
-  pricePerDay     Float
-  imageUrl        String?   // URL or path to the car's image
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
-  bookings        Booking[]
-  softDeleted     Boolean   @default(false)
+  id                 String    @id @default(uuid())
+  name               String
+  brand              String
+  registrationNumber String    @unique
+  status             String    @default("available") // available, booked, inactive
+  pricePerDay        Float
+  imageUrl           String? // URL or path to the car's image
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+  bookings           Booking[]
+  reviews            Review[] // Added this to fix the relation error
+  softDeleted        Boolean   @default(false)
 }
 
 model Booking {
-  id              String    @id @default(uuid())
-  userId          String
-  carId           String
-  startDate       DateTime
-  endDate         DateTime
-  totalAmount     Float
-  status          String    @default("pending") // pending, confirmed, canceled
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
-  user            User      @relation(fields: [userId], references: [id])
-  car             Car       @relation(fields: [carId], references: [id])
-  ticket          Ticket?
-  payment         Payment?
+  id          String   @id @default(uuid())
+  userId      String
+  carId       String
+  startDate   DateTime
+  endDate     DateTime
+  totalAmount Float
+  status      String   @default("pending") // pending, confirmed, canceled
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  user        User     @relation(fields: [userId], references: [id])
+  car         Car      @relation(fields: [carId], references: [id])
+  ticket      Ticket?
+  payment     Payment?
 }
 
 model Ticket {
-  id              String    @id @default(uuid())
-  bookingId       String    @unique
-  uniqueToken     String    @unique @default(uuid())
-  createdAt       DateTime  @default(now())
-  userDetails     String    // JSON representation of user details
-  carDetails      String    // JSON representation of car details
-  bookingDetails  String    // JSON representation of booking details
-  booking         Booking   @relation(fields: [bookingId], references: [id])
+  id             String   @id @default(uuid())
+  bookingId      String   @unique
+  uniqueToken    String   @unique @default(uuid())
+  createdAt      DateTime @default(now())
+  userDetails    String // JSON representation of user details
+  carDetails     String // JSON representation of car details
+  bookingDetails String // JSON representation of booking details
+  booking        Booking  @relation(fields: [bookingId], references: [id])
 }
 
 model Payment {
-  id              String    @id @default(uuid())
-  bookingId       String    @unique
-  amount          Float
-  status          String    @default("pending") // pending, successful, failed
-  method          String    @default("mpesa") // mpesa or other methods
-  transactionId   String?   // Provided by the payment gateway
-  createdAt       DateTime  @default(now())
-  booking         Booking   @relation(fields: [bookingId], references: [id])
+  id            String   @id @default(uuid())
+  bookingId     String   @unique
+  amount        Float
+  status        String   @default("pending") // pending, successful, failed
+  method        String   @default("mpesa") // mpesa or other methods
+  transactionId String? // Provided by the payment gateway
+  createdAt     DateTime @default(now())
+  booking       Booking  @relation(fields: [bookingId], references: [id])
 }
 
 model Event {
-  id              String    @id @default(uuid())
-  title           String
-  description     String
-  date            String
-  location        String
-  imageUrl        String?   // URL or path to the event's image
+  id               String   @id @default(uuid())
+  title            String
+  description      String
+  date             DateTime
+  location         String
+  imageUrl         String? // URL or path to the event's image
   organizerContact String
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
-  organizerId     String
-  organizer       User      @relation("OrganizerEvents", fields: [organizerId], references: [id])
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  organizerId      String
+  organizer        User     @relation("UserToEvent", fields: [organizerId], references: [id])
 }
 
 model Review {
-  id              String    @id @default(uuid())
-  userId          String
-  carId           String
-  content         String
-  rating          Int       @default(5) // Rating out of 5
-  createdAt       DateTime  @default(now())
-  user            User      @relation(fields: [userId], references: [id])
-  car             Car       @relation(fields: [carId], references: [id])
+  id        String   @id @default(uuid())
+  userId    String
+  carId     String
+  content   String
+  rating    Int      @default(5) // Rating out of 5
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+  car       Car      @relation(fields: [carId], references: [id])
 }
 
 model Notification {
-  id              String    @id @default(uuid())
-  userId          String
-  message         String
-  read            Boolean   @default(false)
-  createdAt       DateTime  @default(now())
-  user            User      @relation(fields: [userId], references: [id])
+  id        String   @id @default(uuid())
+  userId    String
+  message   String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
 }
