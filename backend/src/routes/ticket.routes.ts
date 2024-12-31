@@ -1,15 +1,11 @@
 import { Router } from 'express';
-import { getTicketByBookingIdController, generateTicketController, getAllTicketsInBookingController } from '../controllers/ticket.controlller';
+import { TicketController } from '../controllers/ticket.controller';
 
 const router = Router();
+const ticketController = new TicketController();
 
-// Get ticket details by booking ID
-router.get('/tickets/:bookingId', getTicketByBookingIdController);
-
-// Generate a new ticket after booking confirmation
-router.post('/tickets/:bookingId', generateTicketController);
-
-// Get all tickets in a booking
-router.get('/tickets', getAllTicketsInBookingController);
+router.get('/booking/:bookingId', ticketController.getTicketByBookingId);
+router.get('/user/:userId', ticketController.getTicketsByUserId);
+router.get('/', ticketController.getAllTickets);
 
 export default router;

@@ -4,7 +4,7 @@ Content-Type: application/json
 
 
 ### Get details of a specific booking
-GET http://localhost:3000/api/bookings/f7a542c6-b643-4b06-a62a-b1a1f5b2b956
+GET http://localhost:3000/api/bookings/:id
 Content-Type: application/json
 
 
@@ -13,36 +13,38 @@ POST http://localhost:3000/api/bookings
 Content-Type: application/json
 
 {
-  "userId": "27638c81-84ad-455a-9ece-52a38cb85850",
-  "bikeId": "51610907-1e7e-437c-b400-c5cfeec4acd8",
-  "status": "PENDING"
+  "userId": "d7b7eae3-7435-4fc4-bb25-6b9c4d24ad14",
+  "carId": "51610907-1e7e-437c-b400-c5cfeec4acd8",
+  "startDate": "2024-12-01T10:00:00Z",
+  "endDate": "2024-12-05T10:00:00Z",
+  "totalAmount": 500
 }
 
-
-### Create a new booking(book an event with a bike)
-POST http://localhost:3000/api/bookings
-Content-Type: application/json
-
-{
-  "userId": "27638c81-84ad-455a-9ece-52a38cb85850",
-  "bikeId": "9b568392-7681-477b-802a-6dd9a200e964",
-  "eventId": "98e17ade-9faa-42e1-992f-56003dca263e",
-  "status": "PENDING"
-}
 
 
 ### Update booking status
-PUT http://localhost:3000/api/bookings/f93a7b79-403c-41ff-915a-083b37a84d88
+PUT http://localhost:3000/api/bookings/:id/status
 Content-Type: application/json
 
 {
-  "status": "CONFIRMED"
+  "status": "canceled"
 }
 
 
+
 ### Cancel a booking
-PUT http://localhost:3000/api/bookings/f93a7b79-403c-41ff-915a-083b37a84d88/cancel
+PATCH http://localhost:3000/api/bookings/:id/cancel
 Content-Type: application/json
+
+
+
+### Manually Update Car Status
+PATCH http://localhost:3000/api/bookings/car/:carId/status
+Content-Type: application/json
+
+{
+  "status": "available"
+}
 
 
 

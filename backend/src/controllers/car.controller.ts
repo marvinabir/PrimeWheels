@@ -1,94 +1,65 @@
 import { Request, Response } from 'express';
-import { getAllBikes, getBikeById, addBike, updateBike, softDeleteBike, deleteBike } from '../services/bike.service';
+import * as carService from '../services/car.service';
 
-/**
- * Controller to get all available bikes
- * @param req 
- * @param res 
- */
-export const getAllBikesController = async (req: Request, res: Response) => {
+export const getAllCars = async (req: Request, res: Response) => {
   try {
-    const bikes = await getAllBikes();
-    res.status(200).json(bikes);
-  } catch (error: any) {
-    res.status(500).json({ error: error.message });
+    const cars = await carService.getAllCars();
+    res.json(cars);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch cars' });
   }
 };
 
-/**
- * Controller to get a single bike by ID
- * @param req 
- * @param res 
- */
-export const getBikeByIdController = async (req: Request, res: Response) => {
-  const { id } = req.params;
-
+export const getCarById = async (req: Request, res: Response) => {
   try {
-    const bike = await getBikeById(String(id));
-    res.status(200).json(bike);
-  } catch (error: any) {
-    res.status(404).json({ error: error.message });
+    const car = await carService.getCarById(req.params.id);
+    if (!car) {
+      return res.status(404).json({ error: 'Car not found' });
+    }
+    res.json(car);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch car' });
   }
 };
 
-/**
- * Controller to add a new bike
- * @param req 
- * @param res 
- */
-export const addBikeController = async (req: Request, res: Response) => {
-  const { model, status, image } = req.body;
+export const createCar = async (req: Request, res: Response) => {
   try {
-    const bike = await addBike(model, status, image);
-    res.status(201).json(bike);
-  } catch (error: any) {
-    res.status(500).json({ error: error.message });
+    const car = await carService.createCar(req.body);
+    res.status(201).json(car);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to create car' });
   }
 };
 
-/**
- * Controller to update bike details by ID
- * @param req 
- * @param res 
- */
-export const updateBikeController = async (req: Request, res: Response) => {
-  const { id } = req.params;
-  const { model, status, image } = req.body; // Destructure necessary fields
-
+export const updateCar = async (req: Request, res: Response) => {
   try {
-    const updatedBike = await updateBike(String(id), model, status, image);
-    res.status(200).json(updatedBike);
-  } catch (error: any) {
-    res.status(500).json({ error: error.message });
+    const car = await carService.updateCar(req.params.id, req.body);
+    if (!car) {
+      return res.status(404).json({ error: 'Car not found' });
+    }
+    res.json(car);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to update car' });
   }
 };
 
-/**
- * Controller to soft delete a bike (set status to BOOKED)
- * @param req 
- * @param res 
- */
-export const softDeleteBikeController = async (req: Request, res: Response) => {
-  const { id } = req.params;
+export const softDeleteCar = async (req: Request, res: Response) => {
   try {
-    const bike = await softDeleteBike(String(id));
-    res.status(200).json(bike);
-  } catch (error: any) {
-    res.status(500).json({ error: error.message });
+    const car = await carService.softDeleteCar(req.params.id);
+    if (!car) {
+      return res.status(404).json({ error: 'Car not found' });
+    }
+    res.json({ message: 'Car soft deleted', car });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to soft delete car' });
   }
 };
 
-/**
- * Controller to permanently delete a bike by ID
- * @param req 
- * @param res 
- */
-export const deleteBikeController = async (req: Request, res: Response) => {
-  const { id } = req.params;
+export const deleteCar = async (req: Request, res: Response) => {
   try {
-    await deleteBike(String(id));
-    res.status(204).send();
-  } catch (error: any) {
-    res.status(500).json({ error: error.message });
+    const car = await carService.deleteCar(req.params.id);
+    res.json({ message: 'Car deleted', car });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to delete car' });
   }
 };

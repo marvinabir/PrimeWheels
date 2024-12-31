@@ -1,21 +1,17 @@
-import express from 'express';
-import { registerUserController, loginUserController, getUserProfileController, updateUserProfileController, getUserBookingsController, getUserReviewsController, deactivateUserAccountController } from '../controllers/user.controller';
+import { Router } from 'express';
+import { UserController } from '../controllers/user.controller';
 
-const router = express.Router();
+const router = Router();
+const userController = new UserController();
 
-// User registration and login routes
-router.post('/register', registerUserController);
-router.post('/login', loginUserController);
-
-// User profile routes
-router.get('/:userId/profile', getUserProfileController);
-router.put('/:userId/profile', updateUserProfileController);
-
-// User bookings and reviews routes
-router.get('/:userId/bookings', getUserBookingsController);
-router.get('/:userId/reviews', getUserReviewsController);
-
-// Deactivate user account
-router.put('/:userId/deactivate', deactivateUserAccountController);
+router.post('/register', userController.register);
+router.post('/login', userController.login);
+router.put('/assign-role', userController.assignRole);
+router.delete('/:id', userController.deleteUser);
+router.patch('/:id/deactivate', userController.deactivateUser);
+router.get('/:id/bookings', userController.getUserBookings);
+router.get('/:id/reviews', userController.getUserReviews);
+router.get('/:id/profile', userController.getUserProfile);
+router.put('/:id/profile', userController.updateUserProfile);
 
 export default router;

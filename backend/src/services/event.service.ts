@@ -1,74 +1,36 @@
-import { Prisma } from "@prisma/client";
-import prisma from "../config/database";
+//import prisma from "../config/database";
 
-/**
- * Function to get all available events
- * @returns 
- */
-export const getAllEvents = async () => {
-  return await prisma.event.findMany();
-};
+import { PrismaClient } from '@prisma/client';
 
-/**
- * Function to get details of a single event by ID
- * @param id 
- * @returns 
- */
-export const getEventById = async (id: string) => {
-  const event = await prisma.event.findUnique({
-    where: { id },
-  });
+const prisma = new PrismaClient();
 
-  if (!event) {
-    throw new Error('Event not found');
+export class EventService {
+  async addEvent(data: { title: string; description: string; date: string; location: string; imageUrl?: string; organizerContact: string }) {
+    return await prisma.event.create({
+      data,
+    });
   }
 
-  return event;
-};
-
-/**
- * Function to create a new event
- * @param data 
- * @returns 
- */
-export const createEvent = async (data: Prisma.EventCreateInput) => {
-  return await prisma.event.create({
-    data,
-  });
-};
-
-/**
- * Function to update an event's information
- * @param id 
- * @param data 
- * @returns 
- */
-export const updateEvent = async (id: string, data: Prisma.EventUpdateInput) => {
-  const event = await prisma.event.update({
-    where: { id },
-    data,
-  });
-
-  if (!event) {
-    throw new Error('Event not found');
+  async updateEvent(eventId: string, data: { title?: string; description?: string; date?: string; location?: string; imageUrl?: string; organizerContact?: string }) {
+    return await prisma.event.update({
+      where: { id: eventId },
+      data,
+    });
   }
 
-  return event;
-};
-
-/**
- * Function to delete an event by ID
- * @param id 
- * @returns 
- */
-export const deleteEvent = async (id: string) => {
-  const event = await prisma.event.delete({
-    where: { id },
-  });
-
-  if (!event) {
-    throw new Error('Event not found');
+  async deleteEvent(eventId: string) {
+    return await prisma.event.delete({
+      where: { id: eventId },
+    });
   }
 
-  return event;
-};
+  async getEvent(eventId: string) {
+    return await prisma.event.findUnique({
+      where: { id: eventId },
+    });
+  }
+
+  async getAllEvents() {
+    return await prisma.event.findMany();
+  }
+}

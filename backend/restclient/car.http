@@ -1,41 +1,50 @@
-###Get All Available Bikes
-GET http://localhost:3000/bikes
+###Get All Available Cars
+GET http://localhost:3000/api/cars
 Content-Type: application/json
 
 
 
-###Get Details of a Single Bike
-GET http://localhost:3000/bikes/51610907-1e7e-437c-b400-c5cfeec4acd8
+###Get Details of a Single Car
+GET http://localhost:3000/api/cars/:id
 Content-Type: application/json
 
 
-###Add a New Bike
-POST http://localhost:3000/bikes
-Content-Type: application/json
-
-{
-  "model": "FUEL Bike",
-  "status": "AVAILABLE",
-  "image": "image-url"
-}
-
-
-###Update Bike Information
-PUT http://localhost:3000/bikes/395a7764-e6ea-44db-848f-613682b52abb
+###Add a New Car
+POST http://localhost:3000/api/cars
 Content-Type: application/json
 
 {
-  "model": "Road Bike",
-  "status": "BOOKED",
-  "image": "new-image-url"
+  "name": "Toyota Corolla",
+  "brand": "Toyota",
+  "model": "2023",
+  "status": "available",
+  "pricePerDay": 100,
+  "image": "https://example.com/toyota-corolla.jpg"
 }
 
 
-###Soft Delete a Bike
-PUT http://localhost:3000/bikes/cab705ba-9995-4ac4-9575-d64967d3eace/soft-delete
+###Update Car Information
+PUT http://localhost:3000/api/cars/:id
+Content-Type: application/json
+
+{
+  "name": "Toyota Camry",
+  "brand": "Toyota",
+  "model": "2023",
+  "status": "booked",
+  "pricePerDay": 120,
+  "image": "https://example.com/toyota-camry.jpg"
+}
 
 
-###Delete a Bike
-DELETE http://localhost:3000/bikes/d5cbcee5-186b-4c17-9516-91eb587b4850
+
+###Soft Delete a Car
+PUT http://localhost:3000/api/cars/:id/soft-delete
+Content-Type: application/json
+
+
+###Delete a Car
+DELETE http://localhost:3000/api/cars/:id
+Content-Type: application/json
 
 

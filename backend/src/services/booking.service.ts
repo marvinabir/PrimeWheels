@@ -1,165 +1,96 @@
-import { PrismaClient, BookingStatus, BikeStatus } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
+import { v4 as uuidv4 } from 'uuid';
 
 const prisma = new PrismaClient();
 
-// Get all bookings
+export const createBooking = async (data: {
+  userId: string;
+  carId: string;
+  startDate: Date;
+  endDate: Date;
+  totalAmount: number;
+}) => {
+  const car = await prisma.car.findUnique({ where: { id: data.carId } });
+
+  if (!car) throw new Error('Car not found');
+  if (car.status !== 'available') throw new Error('Car is not available for booking');
+
+  const booking = await prisma.booking.create({
+    data: {
+      ...data,
+      status: 'confirmed',
+    },
+  });
+
+  await prisma.car.update({
+    where: { id: data.carId },
+    data: { status: 'booked' },
+  });
+
+  const ticket = await prisma.ticket.create({
+    data: {
+      bookingId: booking.id,
+      uniqueToken: uuidv4(),
+      userDetails: JSON.stringify({ userId: data.userId }),
+      carDetails: JSON.stringify({ carId: data.carId, carName: car.name, brand: car.brand }),
+      bookingDetails: JSON.stringify({
+        startDate: data.startDate,
+        endDate: data.endDate,
+        totalAmount: data.totalAmount,
+      }),
+    },
+  });
+
+  return prisma.booking.findUnique({
+    where: { id: booking.id },
+    include: { ticket: true },
+  });
+};
+
 export const getAllBookings = async () => {
-  return await prisma.booking.findMany({
-    include: {
-      user: true,
-      bike: true,
-      event: true,
-      ticket: true, // Include ticket details
-    },
+  return prisma.booking.findMany({
+    include: { ticket: true, car: true, user: true },
   });
 };
 
-// Get a single booking by ID
 export const getBookingById = async (id: string) => {
-  return await prisma.booking.findUnique({
+  const booking = await prisma.booking.findUnique({
     where: { id },
-    include: {
-      user: true,
-      bike: true,
-      event: true,
-      ticket: true, // Include ticket details
-    },
+    include: { ticket: true, car: true, user: true },
   });
+
+  if (!booking) throw new Error('Booking not found');
+
+  return booking;
 };
 
-// Create a new booking
-export const createBooking = async (data: any) => {
-  const { userId, bikeId, eventId, status } = data;
-
-  if (bikeId) {
-    // Check if the bike is available
-    const bike = await prisma.bike.findUnique({
-      where: { id: bikeId },
-    });
-
-    if (!bike || bike.status !== BikeStatus.AVAILABLE) {
-      throw new Error('Bike is not available for booking.');
-    }
-
-    // Create booking and update bike status to BOOKED
-    const booking = await prisma.booking.create({
-      data: {
-        userId,
-        bikeId,
-        eventId,
-        status: status || BookingStatus.PENDING, // Default status to PENDING if not provided
-      },
-    });
-
-    // Update the bike status to BOOKED (soft-delete)
-    await prisma.bike.update({
-      where: { id: bikeId },
-      data: { status: BikeStatus.BOOKED },
-    });
-
-    // Generate a ticket for the booking
-    const ticket = await prisma.ticket.create({
-      data: {
-        bookingId: booking.id,
-        ticketNumber: `TICKET-${Date.now()}`, // Simple ticket number generation
-        date: new Date().toISOString(),
-        details: `Bike Model: ${bike?.model}`, // Add bike details
-      },
-    });
-
-    // Return the booking with the associated ticket
-    return {
-      ...booking,
-      ticket,
-    };
-  } else {
-    throw new Error('Bike ID is required for creating a booking.');
-  }
-};
-
-// Update booking status
-export const updateBookingStatus = async (id: string, status: BookingStatus) => {
-  return await prisma.booking.update({
+export const updateBookingStatus = async (id: string, status: 'confirmed' | 'canceled' | 'pending') => {
+  return prisma.booking.update({
     where: { id },
     data: { status },
   });
 };
 
-// Cancel a booking and make the bike available again
 export const cancelBooking = async (id: string) => {
-  const booking = await prisma.booking.findUnique({
-    where: { id },
-    include: { bike: true },
+  const booking = await prisma.booking.findUnique({ where: { id } });
+
+  if (!booking) throw new Error('Booking not found');
+
+  await prisma.car.update({
+    where: { id: booking.carId },
+    data: { status: 'available' },
   });
 
-  if (!booking) {
-    throw new Error('Booking not found.');
-  }
-
-  // Update the booking status to CANCELLED
-  await prisma.booking.update({
+  return prisma.booking.update({
     where: { id },
-    data: { status: BookingStatus.CANCELLED },
+    data: { status: 'canceled' },
+    include: { ticket: true },
   });
-
-  // If the booking has a bike, update its status to AVAILABLE
-  if (booking.bikeId) {
-    await prisma.bike.update({
-      where: { id: booking.bikeId },
-      data: { status: BikeStatus.AVAILABLE },
-    });
-  }
-
-  return { message: 'Booking cancelled and bike is now available.' };
 };
 
-
-
-
-
-
-
-
-
-
-// import prisma from "../config/database";
-// import { BookingStatus } from '@prisma/client';
-
-
-// // Get all bookings
-// export const getAllBookings = async () => {
-//   return await prisma.booking.findMany({
-//     include: { user: true, bike: true, event: true },
-//   });
-// };
-
-// // Get details of a specific booking by ID
-// export const getBookingById = async (id: string) => {
-//   return await prisma.booking.findUnique({
-//     where: { id },
-//     include: { user: true, bike: true, event: true, ticket: true},
-//   });
-// };
-
-// // Create a new booking
-// export const createBooking = async (data: any) => {
-//   return await prisma.booking.create({
-//     data,
-//   });
-// };
-
-// // Update booking status
-// export const updateBookingStatus = async (id: string, status: BookingStatus) => {
-//   return await prisma.booking.update({
-//     where: { id },
-//     data: { status },
-//   });
-// };
-
-// // Cancel a booking
-// export const cancelBooking = async (id: string) => {
-//   return await prisma.booking.update({
-//     where: { id },
-//     data: { status: BookingStatus.CANCELLED },
-//   });
-// };
+export const updateCarStatus = async (carId: string, status: 'available' | 'booked' | 'inactive') => {
+  return prisma.car.update({
+    where: { id: carId },
+    data: { status },
+  });
+};

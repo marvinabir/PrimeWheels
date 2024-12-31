@@ -1,55 +1,75 @@
 ### Register new user
-POST http://localhost:3000/users/register
+POST http://localhost:3000/api/users/register
 Content-Type: application/json
 
 {
-  "name": "Mando",
-  "email": "mando@gmail.com",
-  "password": "password",
-  "phone": "9876543210"
+  "name": "John Doe",
+  "email": "johndoe@example.com",
+  "phone": "+1234567890",
+  "password": "securepassword"
 }
 
 
-
 ### Login user
-POST http://localhost:3000/users/login
+POST http://localhost:3000/api/users/login
 Content-Type: application/json
 
 {
-  "email": "mando@gmail.com",
-  "password": "password"
+  "email": "johndoe@example.com",
+  "password": "securepassword"
 }
 
 
 
 ### Get user profile
-GET http://localhost:3000/users/a6718f53-56ab-4642-895c-b5b34e338f1d/profile
+GET http://localhost:3000/api/users/d7b7eae3-7435-4fc4-bb25-6b9c4d24ad14/profile
 Content-Type: application/json
 
 
 
 ### Update user profile
-PUT http://localhost:3000/users/9ab46ec2-b163-4c22-a569-49e48ecd60f2/profile
+PUT http://localhost:3000/api/users/d7b7eae3-7435-4fc4-bb25-6b9c4d24ad14/profile
 Content-Type: application/json
 
 {
-  "name": "John Doe",
-  "phone": "9983711309",
-  "profilePicture": "https://example.com/image.jpg"
+  "name": "John Smith",
+  "email": "johnsmith@example.com",
+  "phone": "+9876543210"
 }
 
 
+
 ### Get all user bookings (events and bikes)
-GET http://localhost:3000/users/9ab46ec2-b163-4c22-a569-49e48ecd60f2/bookings
+GET http://localhost:3000/api/users/d7b7eae3-7435-4fc4-bb25-6b9c4d24ad14/bookings
 Content-Type: application/json
+
+
 
 ### Get all user reviews
-GET http://localhost:3000/users/9ab46ec2-b163-4c22-a569-49e48ecd60f2/reviews
+GET http://localhost:3000/api/users/d7b7eae3-7435-4fc4-bb25-6b9c4d24ad14/reviews
 Content-Type: application/json
 
+
 ### Deactivate user account
-PUT  http://localhost:3000/users/a6718f53-56ab-4642-895c-b5b34e338f1d/deactivate
+PATCH http://localhost:3000/api/users/d7b7eae3-7435-4fc4-bb25-6b9c4d24ad14/deactivate
 Content-Type: application/json
+
+
+
+### Delete user account
+DELETE http://localhost:3000/api/users/d7b7eae3-7435-4fc4-bb25-6b9c4d24ad14
+Content-Type: application/json
+
+
+
+### Assign User Role
+PUT http://localhost:3000/api/users/assign-role
+Content-Type: application/json
+
+{
+  "userId": "d7b7eae3-7435-4fc4-bb25-6b9c4d24ad14",
+  "role": "admin"
+}
 
 
 

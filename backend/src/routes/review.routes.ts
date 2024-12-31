@@ -1,19 +1,14 @@
 import { Router } from 'express';
-import { getAllReviewsForEventController, addReviewForEventController, updateReviewController, deleteReviewController } from '../controllers/review.controller';
-
+import { ReviewController } from '../controllers/review.controller';
 
 const router = Router();
+const reviewController = new ReviewController();
 
-// Get all reviews for an event
-router.get('/reviews/:eventId', getAllReviewsForEventController);
-
-// Add a review for an event
-router.post('/reviews', addReviewForEventController);
-
-// Update a review
-router.put('/reviews/:reviewId', updateReviewController);
-
-// Delete a review
-router.delete('/reviews/:reviewId', deleteReviewController);
+router.post('/', reviewController.addReview);
+router.get('/', reviewController.getAllReviews);
+router.get('/:id', reviewController.getReviewById);
+router.get('/car/:carId', reviewController.getReviewsByCar);
+router.get('/user/:userId', reviewController.getReviewsByUser);
+router.delete('/:id', reviewController.deleteReview);
 
 export default router;

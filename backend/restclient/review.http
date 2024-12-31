@@ -1,30 +1,50 @@
-### Get all reviews for an event
-GET http://localhost:3000/api/reviews/fdcf4072-d61d-4321-b5bb-f86384f26bb1
+### Get all reviews 
+GET http://localhost:3000/api/reviews
 Content-Type: application/json
 
 
-### Add a review for an event
+
+### Get a single review
+GET http://localhost:3000/api/reviews/3c62d98f-cabf-4c2b-9d0f-7c1b32c5de2c
+Content-Type: application/json
+
+
+
+### Get Reviews by Car
+GET http://localhost:3000/api/reviews/car/75e07434-394e-4c93-8b1d-66ab1b512345
+Content-Type: application/json
+
+
+
+### Get Reviews by User
+GET http://localhost:3000/api/reviews/user/9c9485dc-16a5-4d72-8d2e-034e43f15289
+Content-Type: application/json
+
+
+
+### Add a New Review
 POST http://localhost:3000/api/reviews
 Content-Type: application/json
 
 {
-  "userId": "27638c81-84ad-455a-9ece-52a38cb85850",
-  "eventId": "fdcf4072-d61d-4321-b5bb-f86384f26bb1",
-  "rating": 5,
-  "comment": "Amazing event!"
+  "userId": "9c9485dc-16a5-4d72-8d2e-034e43f15289",
+  "carId": "75e07434-394e-4c93-8b1d-66ab1b512345",
+  "content": "The car was amazing! Smooth ride.",
+  "rating": 5
 }
 
 
-### Update a review
-PUT http://localhost:3000/api/reviews/166a432e-8c08-4410-a7fa-92087002e234
-Content-Type: application/json
 
-{
-  "rating": 4,
-  "comment": "Great event but could improve."
-}
+# ### Update a review
+# PUT http://localhost:3000/api/reviews/166a432e-8c08-4410-a7fa-92087002e234
+# Content-Type: application/json
+
+# {
+#   "rating": 4,
+#   "comment": "Great event but could improve."
+# }
 
 
 ### Delete a review
-DELETE http://localhost:3000/api/reviews/1a1e0eb0-0464-4ccb-9abf-bf8ce25d406a
+DELETE http://localhost:3000/api/reviews/3c62d98f-cabf-4c2b-9d0f-7c1b32c5de2c
 Content-Type: application/json

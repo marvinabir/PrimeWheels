@@ -1,109 +1,81 @@
-import prisma from "../config/database";
+import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import nodemailer from 'nodemailer';
 
+const prisma = new PrismaClient();
 
-// Register new user
-export const registerUser = async (data: { name: string; email: string; password: string; phone?: string }) => {
-  const hashedPassword = await bcrypt.hash(data.password, 10);
-  return await prisma.user.create({
-    data: {
-      ...data,
-      password: hashedPassword,
-    },
-  });
-};
-
-// Login user
-export const loginUser = async (email: string, password: string) => {
-  const user = await prisma.user.findUnique({ where: { email } });
-  if (!user || !(await bcrypt.compare(password, user.password))) {
-    throw new Error('Invalid email or password');
-  }
-  const token = jwt.sign({ id: user.id, email: user.email, role: user.role }, process.env.JWT_SECRET || 'defaultSecret');
-  return { token, user };
-};
-
-// Get user profile
-export const getUserProfile = async (userId: string) => {
-  return await prisma.user.findUnique({
-    where: { id: userId },
-    include: {
-      bookings: true,
-      reviews: true,
-      payments: true
-    }
-  });
-};
-
-// Update user profile (name, phone, profilePicture)
-export const updateUserProfile = async (userId: string, data: { name?: string; phone?: string; profilePicture?: string }) => {
-  return await prisma.user.update({
-    where: { id: userId },
-    data
-  });
-};
-
-// Get all user bookings (events and bikes)
-export const getUserBookings = async (userId: string) => {
-  return await prisma.booking.findMany({
-    where: { userId },
-    include: {
-      bike: true,
-      event: true
-    }
-  });
-};
-
-// Get all user reviews
-export const getUserReviews = async (userId: string) => {
-  return await prisma.review.findMany({
-    where: { userId },
-    include: {
-      event: true
-    }
-  });
-};
-
-// Deactivate user account
-export const deactivateUserAccount = async (userId: string) => {
-  return await prisma.user.update({
-    where: { id: userId },
-    data: { email: '', password: '', name: 'Deactivated User' }  // Removing sensitive information
-  });
-};
-
-// Reset password (step 1: send code)
-export const sendResetPasswordCode = async (email: string) => {
-  const user = await prisma.user.findUnique({ where: { email } });
-  if (!user) {
-    throw new Error('User not found');
+export class UserService {
+  async registerUser(data: { name: string; email: string; phone: string; password: string }) {
+    const hashedPassword = await bcrypt.hash(data.password, 10);
+    return await prisma.user.create({
+      data: {
+        name: data.name,
+        email: data.email,
+        phone: data.phone,
+        password: hashedPassword,
+        role: 'user', // Default role
+      },
+    });
   }
 
-  const resetCode = Math.floor(100000 + Math.random() * 900000).toString(); // Generate random 6-digit code
-  await prisma.user.update({ where: { email }, data: { resetCode } });
+  async loginUser(email: string, password: string) {
+    const user = await prisma.user.findUnique({ where: { email } });
+    if (!user || !(await bcrypt.compare(password, user.password))) {
+      throw new Error('Invalid email or password');
+    }
 
-  // Send reset code via email
-  await sendMail(email, resetCode);
+    const token = jwt.sign({ userId: user.id, role: user.role }, process.env.JWT_SECRET || 'secret', {
+      expiresIn: '1d',
+    });
 
-  return resetCode; // For debugging purposes (can remove in production)
-};
-
-// Reset password (step 2: verify code and reset)
-export const resetPassword = async (email: string, resetCode: string, newPassword: string) => {
-  const user = await prisma.user.findUnique({ where: { email } });
-  if (!user || user.resetCode !== resetCode) {
-    throw new Error('Invalid reset code');
+    return { token, user };
   }
 
-  const hashedPassword = await bcrypt.hash(newPassword, 10);
-  await prisma.user.update({
-    where: { email },
-    data: { password: hashedPassword, resetCode: null },  // Clear reset code after successful reset
-  });
-};
-function sendMail(email: string, resetCode: string) {
-  throw new Error('Function not implemented.');
+  async assignRole(userId: string, role: 'user' | 'admin' | 'organizer') {
+    return await prisma.user.update({
+      where: { id: userId },
+      data: { role },
+    });
+  }
+
+  async deleteUser(userId: string) {
+    return await prisma.user.delete({
+      where: { id: userId },
+    });
+  }
+
+  async deactivateUser(userId: string) {
+    return await prisma.user.update({
+      where: { id: userId },
+      data: { isActive: false },
+    });
+  }
+
+  async getUserBookings(userId: string) {
+    return await prisma.booking.findMany({
+      where: { userId },
+      include: { car: true, ticket: true },
+    });
+  }
+
+  async getUserReviews(userId: string) {
+    return await prisma.review.findMany({
+      where: { userId },
+      include: { car: true },
+    });
+  }
+
+  async getUserProfile(userId: string) {
+    return await prisma.user.findUnique({
+      where: { id: userId },
+      select: { id: true, name: true, email: true, phone: true, role: true, isActive: true },
+    });
+  }
+
+  async updateUserProfile(userId: string, data: { name?: string; email?: string; phone?: string }) {
+    return await prisma.user.update({
+      where: { id: userId },
+      data,
+    });
+  }
 }
-

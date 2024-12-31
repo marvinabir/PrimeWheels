@@ -1,33 +1,25 @@
-import prisma from "../config/database";
-import { v4 as uuidv4 } from 'uuid'; // For generating unique ticket numbers
+import { PrismaClient } from '@prisma/client';
 
+const prisma = new PrismaClient();
 
-// Get ticket details by booking ID
-export const getTicketByBookingId = async (bookingId: string) => {
-  return await prisma.ticket.findUnique({
-    where: { bookingId },
-    include: { booking: { include: { user: true, bike: true, event: true } } },
-  });
-};
+export class TicketService {
+  async getTicketByBookingId(bookingId: string) {
+    return await prisma.ticket.findUnique({
+      where: { bookingId },
+    });
+  }
 
-// Generate a new ticket after booking confirmation
-export const generateTicket = async (bookingId: string, details: string) => {
-  const ticketNumber = uuidv4(); // Generate a unique ticket number
-  const date = new Date().toISOString();
-  
-  return await prisma.ticket.create({
-    data: {
-      bookingId,
-      ticketNumber,
-      date,
-      details,
-    },
-  });
-};
+  async getTicketsByUserId(userId: string) {
+    return await prisma.ticket.findMany({
+      where: {
+        userDetails: {
+          contains: `"id":"${userId}"`, // Assumes userDetails is stored as JSON
+        },
+      },
+    });
+  }
 
-// Get all tickets in a booking
-export const getAllTicketsInBooking = async () => {
-  return await prisma.ticket.findMany({
-    include: { booking: { include: { user: true, bike: true, event: true } } },
-  });
-};
+  async getAllTickets() {
+    return await prisma.ticket.findMany();
+  }
+}

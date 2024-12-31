@@ -1,126 +1,56 @@
 import { Request, Response } from 'express';
-import { getAllBookings, getBookingById, createBooking, updateBookingStatus, cancelBooking } from '../services/booking.service';
+import * as bookingService from '../services/booking.service';
 
-// Get all bookings
-export const getAllBookingsController = async (req: Request, res: Response) => {
+export const createBooking = async (req: Request, res: Response) => {
   try {
-    const bookings = await getAllBookings();
-    res.status(200).json(bookings);
+    const booking = await bookingService.createBooking(req.body);
+    res.status(201).json(booking);
   } catch (error: any) {
-    res.status(500).json({ error: error.message });
+    res.status(400).json({ error: error.message });
   }
 };
 
-// Get a single booking by ID
-export const getBookingByIdController = async (req: Request, res: Response) => {
-  const { id } = req.params;
+export const getAllBookings = async (req: Request, res: Response) => {
   try {
-    const booking = await getBookingById(String(id));
-    if (!booking) {
-      res.status(404).json({ message: 'Booking not found.' });
-      return;
-    }
-    res.status(200).json(booking);
-  } catch (error: any) {
-    res.status(500).json({ error: error.message });
+    const bookings = await bookingService.getAllBookings();
+    res.json(bookings);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch bookings' });
   }
 };
 
-// Create a new booking
-export const createBookingController = async (req: Request, res: Response) => {
-  const data = req.body;
+export const getBookingById = async (req: Request, res: Response) => {
   try {
-    const newBooking = await createBooking(data);
-    res.status(201).json(newBooking);
+    const booking = await bookingService.getBookingById(req.params.id);
+    res.json(booking);
   } catch (error: any) {
-    res.status(500).json({ error: error.message });
+    res.status(404).json({ error: error.message });
   }
 };
 
-// Update booking status
-export const updateBookingStatusController = async (req: Request, res: Response) => {
-  const { id } = req.params;
-  const { status } = req.body;
+export const updateBookingStatus = async (req: Request, res: Response) => {
   try {
-    const updatedBooking = await updateBookingStatus(String(id), status);
-    res.status(200).json(updatedBooking);
-  } catch (error: any) {
-    res.status(500).json({ error: error.message });
+    const booking = await bookingService.updateBookingStatus(req.params.id, req.body.status);
+    res.json(booking);
+  } catch (error) {
+    res.status(400).json({ error: 'Failed to update booking status' });
   }
 };
 
-// Cancel a booking
-export const cancelBookingController = async (req: Request, res: Response) => {
-  const { id } = req.params;
+export const cancelBooking = async (req: Request, res: Response) => {
   try {
-    const result = await cancelBooking(String(id));
-    res.status(200).json(result);
+    const booking = await bookingService.cancelBooking(req.params.id);
+    res.json(booking);
   } catch (error: any) {
-    res.status(500).json({ error: error.message });
+    res.status(400).json({ error: error.message });
   }
 };
 
-
-
-
-
-
-
-// import { Request, Response } from 'express';
-// import { getAllBookings, getBookingById, createBooking, updateBookingStatus, cancelBooking } from '../services/booking.service';
-
-// // Get all bookings
-// export const getAllBookingsController = async (req: Request, res: Response) => {
-//   try {
-//     const bookings = await getAllBookings();
-//     res.status(200).json(bookings);
-//   } catch (error: any) {
-//     res.status(500).json({ error: error.message });
-//   }
-// };
-
-// // Get a specific booking by ID
-// export const getBookingByIdController = async (req: Request, res: Response) => {
-//   const { id } = req.params;
-//   try {
-//     const booking = await getBookingById(String(id));
-//     if (!booking) return res.status(404).json({ message: 'Booking not found' });
-//     res.status(200).json(booking);
-//   } catch (error: any) {
-//     res.status(500).json({ error: error.message });
-//   }
-// };
-
-// // Create a new booking
-// export const createBookingController = async (req: Request, res: Response) => {
-//   const data = req.body;
-//   try {
-//     const newBooking = await createBooking(data);
-//     res.status(201).json(newBooking);
-//   } catch (error: any) {
-//     res.status(500).json({ error: error.message });
-//   }
-// };
-
-// // Update booking status
-// export const updateBookingStatusController = async (req: Request, res: Response) => {
-//   const { id } = req.params;
-//   const { status } = req.body;
-//   try {
-//     const updatedBooking = await updateBookingStatus(String(id), status);
-//     res.status(200).json(updatedBooking);
-//   } catch (error: any) {
-//     res.status(500).json({ error: error.message });
-//   }
-// };
-
-// // Cancel a booking
-// export const cancelBookingController = async (req: Request, res: Response) => {
-//   const { id } = req.params;
-//   try {
-//     const cancelledBooking = await cancelBooking(String(id));
-//     res.status(200).json(cancelledBooking);
-//   } catch (error: any) {
-//     res.status(500).json({ error: error.message });
-//   }
-// };
+export const updateCarStatus = async (req: Request, res: Response) => {
+  try {
+    const car = await bookingService.updateCarStatus(req.params.carId, req.body.status);
+    res.json(car);
+  } catch (error) {
+    res.status(400).json({ error: 'Failed to update car status' });
+  }
+};

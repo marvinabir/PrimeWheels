@@ -1,47 +1,61 @@
 import { Request, Response } from 'express';
-import { getAllReviewsForEvent, addReviewForEvent, updateReview, deleteReview } from '../services/review.service';
+import { ReviewService } from '../services/review.service';
 
-// Get all reviews for an event
-export const getAllReviewsForEventController = async (req: Request, res: Response) => {
-  const { eventId } = req.params;
-  try {
-    const reviews = await getAllReviewsForEvent(String(eventId));
-    res.status(200).json(reviews);
-  } catch (error: any) {
-    res.status(500).json({ error: error.message });
-  }
-};
+const reviewService = new ReviewService();
 
-// Add a review for an event
-export const addReviewForEventController = async (req: Request, res: Response) => {
-  const { userId, eventId, rating, comment } = req.body;
-  try {
-    const review = await addReviewForEvent(String(userId), String(eventId), Number(rating), comment);
-    res.status(201).json(review);
-  } catch (error: any) {
-    res.status(500).json({ error: error.message });
+export class ReviewController {
+  async addReview(req: Request, res: Response) {
+    try {
+      const { userId, carId, content, rating } = req.body;
+      const review = await reviewService.addReview({ userId, carId, content, rating });
+      res.status(201).json(review);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
   }
-};
 
-// Update a review
-export const updateReviewController = async (req: Request, res: Response) => {
-  const { reviewId } = req.params;
-  const { rating, comment } = req.body;
-  try {
-    const updatedReview = await updateReview(String(reviewId), Number(rating), comment);
-    res.status(200).json(updatedReview);
-  } catch (error: any) {
-    res.status(500).json({ error: error.message });
+  async getAllReviews(req: Request, res: Response) {
+    try {
+      const reviews = await reviewService.getAllReviews();
+      res.json(reviews);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
   }
-};
 
-// Delete a review
-export const deleteReviewController = async (req: Request, res: Response) => {
-  const { reviewId } = req.params;
-  try {
-    await deleteReview(String(reviewId));
-    res.status(204).json({ message: 'Review deleted' });
-  } catch (error: any) {
-    res.status(500).json({ error: error.message });
+  async getReviewById(req: Request, res: Response) {
+    try {
+      const review = await reviewService.getReviewById(req.params.id);
+      res.json(review);
+    } catch (error) {
+      res.status(404).json({ error: error.message });
+    }
   }
-};
+
+  async getReviewsByCar(req: Request, res: Response) {
+    try {
+      const reviews = await reviewService.getReviewsByCar(req.params.carId);
+      res.json(reviews);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  }
+
+  async getReviewsByUser(req: Request, res: Response) {
+    try {
+      const reviews = await reviewService.getReviewsByUser(req.params.userId);
+      res.json(reviews);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  }
+
+  async deleteReview(req: Request, res: Response) {
+    try {
+      await reviewService.deleteReview(req.params.id);
+      res.status(204).send();
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  }
+}

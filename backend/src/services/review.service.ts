@@ -1,36 +1,60 @@
-import prisma from "../config/database";
+//import prisma from "../config/database";
 
-// Get all reviews for an event
-export const getAllReviewsForEvent = async (eventId: string) => {
-  return await prisma.review.findMany({
-    where: { eventId },
-    include: { user: true, event: true },
-  });
-};
+import { PrismaClient } from '@prisma/client';
 
-// Add a review for an event
-export const addReviewForEvent = async (userId: string, eventId: string, rating: number, comment?: string) => {
-  return await prisma.review.create({
-    data: {
-      userId,
-      eventId,
-      rating,
-      comment,
-    },
-  });
-};
+const prisma = new PrismaClient();
 
-// Update a review
-export const updateReview = async (reviewId: string, rating: number, comment?: string) => {
-  return await prisma.review.update({
-    where: { id: reviewId },
-    data: { rating, comment },
-  });
-};
+export class ReviewService {
+  async addReview(data: { userId: string; carId: string; content: string; rating: number }) {
+    return await prisma.review.create({
+      data,
+      include: {
+        user: true,
+        car: true,
+      },
+    });
+  }
 
-// Delete a review
-export const deleteReview = async (reviewId: string) => {
-  return await prisma.review.delete({
-    where: { id: reviewId },
-  });
-};
+  async getAllReviews() {
+    return await prisma.review.findMany({
+      include: {
+        user: true,
+        car: true,
+      },
+    });
+  }
+
+  async getReviewById(id: string) {
+    return await prisma.review.findUnique({
+      where: { id },
+      include: {
+        user: true,
+        car: true,
+      },
+    });
+  }
+
+  async getReviewsByCar(carId: string) {
+    return await prisma.review.findMany({
+      where: { carId },
+      include: {
+        user: true,
+      },
+    });
+  }
+
+  async getReviewsByUser(userId: string) {
+    return await prisma.review.findMany({
+      where: { userId },
+      include: {
+        car: true,
+      },
+    });
+  }
+
+  async deleteReview(id: string) {
+    return await prisma.review.delete({
+      where: { id },
+    });
+  }
+}
