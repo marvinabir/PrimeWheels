@@ -4,7 +4,7 @@ Content-Type: application/json
 
 
 ### Get details of a specific booking
-GET http://localhost:3000/api/bookings/cae6b680-2ced-4a0c-b528-761b9c7e08aa
+GET http://localhost:3000/api/bookings/4efd29ec-654f-45fa-aed3-0825de29c6de
 Content-Type: application/json
 
 
@@ -13,8 +13,8 @@ POST http://localhost:3000/api/bookings
 Content-Type: application/json
 
 {
-  "userId": "30e4ef59-0799-4051-85e2-6e9044752c4e",
-  "carId": "70a2ca4c-cd53-4f5f-abcb-f0f352f28ea4",
+  "userId": "bf5c75e5-2019-4b12-bc7c-bb7ebcf5f019",
+  "carId": "435392c4-b4a6-40ab-a932-af3557494323",
   "startDate": "2024-12-01T10:00:00Z",
   "endDate": "2024-12-05T10:00:00Z",
   "totalAmount": 500
@@ -23,7 +23,7 @@ Content-Type: application/json
 
 
 ### Update booking status
-PUT http://localhost:3000/api/bookings/cae6b680-2ced-4a0c-b528-761b9c7e08aa/status
+PUT http://localhost:3000/api/bookings/4efd29ec-654f-45fa-aed3-0825de29c6de/status
 Content-Type: application/json
 
 {
@@ -33,7 +33,7 @@ Content-Type: application/json
 
 
 ### Cancel a booking
-PATCH http://localhost:3000/api/bookings/cae6b680-2ced-4a0c-b528-761b9c7e08aa/cancel
+PATCH http://localhost:3000/api/bookings/4efd29ec-654f-45fa-aed3-0825de29c6de/cancel
 Content-Type: application/json
 
 

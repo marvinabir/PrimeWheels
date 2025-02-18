@@ -5,19 +5,19 @@ Content-Type: application/json
 
 
 ### Get a single review
-GET http://localhost:3000/api/reviews/3c62d98f-cabf-4c2b-9d0f-7c1b32c5de2c
+GET http://localhost:3000/api/reviews/69254c81-00e6-42b9-a27f-b6200136435b
 Content-Type: application/json
 
 
 
 ### Get Reviews by Car
-GET http://localhost:3000/api/reviews/car/70a2ca4c-cd53-4f5f-abcb-f0f352f28ea4
+GET http://localhost:3000/api/reviews/car/a72c41b2-3dcf-4c45-ac02-7aabcfb1ee1d
 Content-Type: application/json
 
 
 
 ### Get Reviews by User
-GET http://localhost:3000/api/reviews/user/30e4ef59-0799-4051-85e2-6e9044752c4e
+GET http://localhost:3000/api/reviews/user/bf5c75e5-2019-4b12-bc7c-bb7ebcf5f019
 Content-Type: application/json
 
 
@@ -27,8 +27,8 @@ POST http://localhost:3000/api/reviews
 Content-Type: application/json
 
 {
-  "userId": "30e4ef59-0799-4051-85e2-6e9044752c4e",
-  "carId": "70a2ca4c-cd53-4f5f-abcb-f0f352f28ea4",
+  "userId": "bf5c75e5-2019-4b12-bc7c-bb7ebcf5f019",
+  "carId": "a72c41b2-3dcf-4c45-ac02-7aabcfb1ee1d",
   "content": "The car was amazing! Smooth ride.",
   "rating": 5
 }
@@ -46,5 +46,5 @@ Content-Type: application/json
 
 
 ### Delete a review
-DELETE http://localhost:3000/api/reviews/3c62d98f-cabf-4c2b-9d0f-7c1b32c5de2c
+DELETE http://localhost:3000/api/reviews/db3ea04e-8fcd-4289-bed3-ac1c3e1e2fde
 Content-Type: application/json

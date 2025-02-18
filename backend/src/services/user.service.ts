@@ -44,12 +44,12 @@ export class UserService {
     });
   }
 
-  async deactivateUser(userId: string) {
-    return await prisma.user.update({
-      where: { id: userId },
-      data: { isActive: false },
-    });
-  }
+  // async deactivateUser(userId: string) {
+  //   return await prisma.user.update({
+  //     where: { id: userId },
+  //     data: { isActive: false },
+  //   });
+  // }
 
   async getUserBookings(userId: string) {
     return await prisma.booking.findMany({
@@ -68,7 +68,7 @@ export class UserService {
   async getUserProfile(userId: string) {
     return await prisma.user.findUnique({
       where: { id: userId },
-      select: { id: true, name: true, email: true, phone: true, role: true, isActive: true },
+      select: { id: true, name: true, email: true, phone: true, role: true },
     });
   }
 

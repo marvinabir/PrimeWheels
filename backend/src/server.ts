@@ -36,7 +36,7 @@ app.use('/api/cars', carRoutes);
 app.use('/api/events', eventRoutes);
 app.use('/api/bookings', bookingRoutes);
 app.use('/api/tickets', ticketRoutes);
-app.use('/api', reviewRoutes);
+app.use('/api/reviews', reviewRoutes);
 // app.use('/', adminRoutes);
 // app.use('/api', paymentRoutes);
 app.use('/api/users', userRoutes);

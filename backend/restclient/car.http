@@ -5,7 +5,7 @@ Content-Type: application/json
 
 
 ###Get Details of a Single Car
-GET http://localhost:3000/api/cars/70a2ca4c-cd53-4f5f-abcb-f0f352f28ea4
+GET http://localhost:3000/api/cars/a72c41b2-3dcf-4c45-ac02-7aabcfb1ee1d
 Content-Type: application/json
 
 
@@ -15,9 +15,9 @@ Content-Type: application/json
 
 
 {
-  "name": "Toyota Corolla",
-  "brand": "Toyota",
-  "registrationNumber": "2023",
+  "name": "Tesla cybertruck",
+  "brand": "Tesla",
+  "registrationNumber": "2033",
   "pricePerDay": 100,
   "imageUrl": "https://example.com/toyota-corolla.jpg"
 }
@@ -25,13 +25,13 @@ Content-Type: application/json
 
 
 ###Update Car Information
-PUT http://localhost:3000/api/cars/70a2ca4c-cd53-4f5f-abcb-f0f352f28ea4
+PUT http://localhost:3000/api/cars/a72c41b2-3dcf-4c45-ac02-7aabcfb1ee1d
 Content-Type: application/json
 
 {
-  "name": "Toyota Camry",
+  "name": "Toyota Corolla",
   "brand": "Toyota",
-  "registrationNumber": "2023",
+  "registrationNumber": "2033",
   "pricePerDay": 120,  
   "status": "booked",
   "imageUrl": "https://example.com/toyota-camry.jpg"
@@ -40,12 +40,19 @@ Content-Type: application/json
 
 
 ###Soft Delete a Car
-PUT http://localhost:3000/api/cars/70a2ca4c-cd53-4f5f-abcb-f0f352f28ea4/soft-delete
+PUT http://localhost:3000/api/cars/a72c41b2-3dcf-4c45-ac02-7aabcfb1ee1d/soft-delete
 Content-Type: application/json
 
 
 ###Delete a Car
-DELETE http://localhost:3000/api/cars/70a2ca4c-cd53-4f5f-abcb-f0f352f28ea4
+DELETE http://localhost:3000/api/cars/24f35956-eaf3-4fd8-b2a7-22dc4a4fa949
 Content-Type: application/json
 
 
+### Manually Update Car Status
+PATCH http://localhost:3000/api/bookings/car/a72c41b2-3dcf-4c45-ac02-7aabcfb1ee1d/status
+Content-Type: application/json
+
+{
+  "status": "available"
+}
