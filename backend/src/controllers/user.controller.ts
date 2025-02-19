@@ -9,7 +9,7 @@ export class UserController {
       const user = await userService.registerUser(req.body);
       res.status(201).json(user);
     } catch (error: any) {
-      res.status(400).json({ error: error.message });
+      res.status(400).json({ error:"failed to register user" });
     }
   }
 
@@ -38,18 +38,18 @@ export class UserController {
       await userService.deleteUser(req.params.id);
       res.status(204).send();
     } catch (error: any) {
-      res.status(400).json({ error: error.message });
+      res.status(400).json({ error:"failed to DELETE user" });
     }
   }
 
-  async deactivateUser(req: Request, res: Response) {
-    try {
-      const updatedUser = await userService.deactivateUser(req.params.id);
-      res.json(updatedUser);
-    } catch (error: any) {
-      res.status(400).json({ error: error.message });
-    }
-  }
+  // async deactivateUser(req: Request, res: Response) {
+  //   try {
+  //     const updatedUser = await userService.deactivateUser(req.params.id);
+  //     res.json(updatedUser);
+  //   } catch (error: any) {
+  //     res.status(400).json({ error: error.message });
+  //   }
+  // }
 
   async getUserBookings(req: Request, res: Response) {
     try {

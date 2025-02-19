@@ -1,9 +1,9 @@
 ### Get ticket details by booking ID
-GET http://localhost:3000/api/tickets/booking/4efd29ec-654f-45fa-aed3-0825de29c6de
+GET http://localhost:3000/api/tickets/booking/3e18ecd7-1cac-4339-b05e-1eefebddc197
 Content-Type: application/json
 
 
-### Get Tickets by User ID ************
+### Get Tickets by User ID ************problem
 GET http://localhost:3000/api/tickets/user/bf5c75e5-2019-4b12-bc7c-bb7ebcf5f019
 Content-Type: application/json
 
@@ -12,4 +12,6 @@ Content-Type: application/json
 ### Get all tickets 
 GET http://localhost:3000/api/tickets
 Content-Type: application/json
+
+
 

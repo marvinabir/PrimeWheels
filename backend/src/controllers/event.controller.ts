@@ -19,7 +19,7 @@ export class EventController {
       const updatedEvent = await eventService.updateEvent(eventId, req.body);
       res.json(updatedEvent);
     } catch (error: any) {
-      res.status(400).json({ error: error.message });
+      res.status(400).json({ error: "Failed to update event" });
     }
   }
 
@@ -28,7 +28,7 @@ export class EventController {
       await eventService.deleteEvent(req.params.id);
       res.status(204).send();
     } catch (error: any) {
-      res.status(400).json({ error: error.message });
+      res.status(400).json({ error: "Failed to delete event" });
     }
   }
 
@@ -37,7 +37,7 @@ export class EventController {
       const event = await eventService.getEvent(req.params.id);
       res.json(event);
     } catch (error: any) {
-      res.status(404).json({ error: error.message });
+      res.status(404).json({ error: "Failed to get the events" });
     }
   }
 
@@ -46,7 +46,7 @@ export class EventController {
       const events = await eventService.getAllEvents();
       res.json(events);
     } catch (error: any) {
-      res.status(400).json({ error: error.message });
+      res.status(400).json({ error: "Failed to Fetch events" });
     }
   }
 }

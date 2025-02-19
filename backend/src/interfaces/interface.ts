@@ -1,16 +1,45 @@
+export enum UserRole {
+  USER = "USER",
+  ADMIN = "ADMIN",
+  ORGANIZER = "ORGANIZER",
+}
+
+export enum CarStatus {
+  AVAILABLE = "AVAILABLE",
+  BOOKED = "BOOKED",
+  INACTIVE = "INACTIVE",
+}
+
+export enum BookingStatus {
+  PENDING = "PENDING",
+  CONFIRMED = "CONFIRMED",
+  CANCELED = "CANCELED",
+}
+
+export enum PaymentStatus {
+  PENDING = "PENDING",
+  SUCCESSFUL = "SUCCESSFUL",
+  FAILED = "FAILED",
+}
+
+export enum PaymentMethod {
+  MPESA = "MPESA",
+  CARD = "CARD",
+  PAYPAL = "PAYPAL",
+}
+
 export interface User {
   id: string;
   name: string;
   email: string;
   password: string;
   phone: string;
-  role: "user" | "admin" | "organizer"; // Enum for roles
+  role: UserRole;
   createdAt: Date;
   updatedAt: Date;
-  bookings?: Booking[]; // Optional relation to bookings
-  reviews?: Review[]; // Optional relation to reviews
-  notifications?: Notification[]; // Optional relation to notifications
-  events?: Event[]; // Optional relation for organizer events
+  bookings?: Booking[];
+  reviews?: Review[];
+  notifications?: Notification[];
 }
 
 export interface Car {
@@ -18,12 +47,12 @@ export interface Car {
   name: string;
   brand: string;
   registrationNumber: string;
-  status: "available" | "booked" | "inactive"; // Enum for car status
+  status: CarStatus;
   pricePerDay: number;
-  imageUrl?: string; // Optional field for the car's image URL
+  imageUrl?: string;
   createdAt: Date;
   updatedAt: Date;
-  bookings?: Booking[]; // Optional relation to bookings
+  bookings?: Booking[];
   softDeleted: boolean;
 }
 
@@ -34,35 +63,35 @@ export interface Booking {
   startDate: Date;
   endDate: Date;
   totalAmount: number;
-  status: "pending" | "confirmed" | "canceled"; // Enum for booking status
+  status: BookingStatus;
   createdAt: Date;
   updatedAt: Date;
-  user?: User; // Optional relation to the user who made the booking
-  car?: Car; // Optional relation to the booked car
-  ticket?: Ticket; // Optional relation to the booking's ticket
-  payment?: Payment; // Optional relation to the booking's payment
+  user?: User;
+  car?: Car;
+  ticket?: Ticket;
+  payment?: Payment;
 }
 
 export interface Ticket {
   id: string;
   bookingId: string;
-  uniqueToken: string; // Unique token for the ticket
+  uniqueToken: string;
   createdAt: Date;
-  userDetails: string; // JSON representation of user details
-  carDetails: string; // JSON representation of car details
-  bookingDetails: string; // JSON representation of booking details
-  booking?: Booking; // Optional relation to the booking
+  userDetails: string;
+  carDetails: string;
+  bookingDetails: string;
+  booking?: Booking;
 }
 
 export interface Payment {
   id: string;
   bookingId: string;
   amount: number;
-  status: "pending" | "successful" | "failed"; // Enum for payment status
-  method: "mpesa" | string; // Enum for payment methods, default to Mpesa
-  transactionId?: string; // Optional transaction ID
+  status: PaymentStatus;
+  method: PaymentMethod;
+  transactionId?: string;
   createdAt: Date;
-  booking?: Booking; // Optional relation to the booking
+  booking?: Booking;
 }
 
 export interface Event {
@@ -71,12 +100,10 @@ export interface Event {
   description: string;
   date: Date;
   location: string;
-  imageUrl?: string; // Optional field for the event's image URL
+  imageUrl?: string;
   organizerContact: string;
   createdAt: Date;
   updatedAt: Date;
-  organizerId?: string;
-  organizer?: User; // Optional relation to the organizer
 }
 
 export interface Review {
@@ -84,19 +111,17 @@ export interface Review {
   userId: string;
   carId: string;
   content: string;
-  rating: number; // Rating out of 5
+  rating: number;
   createdAt: Date;
-  user?: User; // Optional relation to the user who left the review
-  car?: Car; // Optional relation to the reviewed car
+  user?: User;
+  car?: Car;
 }
 
 export interface Notification {
   id: string;
   userId: string;
   message: string;
-  read: boolean; // Whether the notification has been read
+  read: boolean;
   createdAt: Date;
-  user?: User; // Optional relation to the user receiving the notification
+  user?: User;
 }
-
-

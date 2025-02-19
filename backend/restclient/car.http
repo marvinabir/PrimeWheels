@@ -5,7 +5,7 @@ Content-Type: application/json
 
 
 ###Get Details of a Single Car
-GET http://localhost:3000/api/cars/a72c41b2-3dcf-4c45-ac02-7aabcfb1ee1d
+GET http://localhost:3000/api/cars/5be3780d-aeee-4552-a1c4-ea66f5d8c838
 Content-Type: application/json
 
 
@@ -15,9 +15,9 @@ Content-Type: application/json
 
 
 {
-  "name": "Tesla cybertruck",
-  "brand": "Tesla",
-  "registrationNumber": "2033",
+  "name": "Bumblebee",
+  "brand": "wildcat",
+  "registrationNumber": "2045",
   "pricePerDay": 100,
   "imageUrl": "https://example.com/toyota-corolla.jpg"
 }
@@ -29,11 +29,11 @@ PUT http://localhost:3000/api/cars/a72c41b2-3dcf-4c45-ac02-7aabcfb1ee1d
 Content-Type: application/json
 
 {
-  "name": "Toyota Corolla",
+  "name": "Toyota axio",
   "brand": "Toyota",
   "registrationNumber": "2033",
   "pricePerDay": 120,  
-  "status": "booked",
+  "status": "BOOKED",
   "imageUrl": "https://example.com/toyota-camry.jpg"
 }
 
@@ -45,7 +45,7 @@ Content-Type: application/json
 
 
 ###Delete a Car
-DELETE http://localhost:3000/api/cars/24f35956-eaf3-4fd8-b2a7-22dc4a4fa949
+DELETE http://localhost:3000/api/cars/8d9be9d8-9ccb-4e0f-961d-3c163b831175
 Content-Type: application/json
 
 
@@ -54,5 +54,5 @@ PATCH http://localhost:3000/api/bookings/car/a72c41b2-3dcf-4c45-ac02-7aabcfb1ee1
 Content-Type: application/json
 
 {
-  "status": "available"
+  "status": "AVAILABLE"
 }

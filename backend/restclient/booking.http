@@ -14,7 +14,7 @@ Content-Type: application/json
 
 {
   "userId": "bf5c75e5-2019-4b12-bc7c-bb7ebcf5f019",
-  "carId": "435392c4-b4a6-40ab-a932-af3557494323",
+  "carId": "03ec22f6-2099-4ed7-bd29-dea15a04845f",
   "startDate": "2024-12-01T10:00:00Z",
   "endDate": "2024-12-05T10:00:00Z",
   "totalAmount": 500
@@ -27,7 +27,7 @@ PUT http://localhost:3000/api/bookings/4efd29ec-654f-45fa-aed3-0825de29c6de/stat
 Content-Type: application/json
 
 {
-  "status": "canceled"
+  "status": "CONFIRMED"
 }
 
 
@@ -43,7 +43,7 @@ PATCH http://localhost:3000/api/bookings/car/70a2ca4c-cd53-4f5f-abcb-f0f352f28ea
 Content-Type: application/json
 
 {
-  "status": "available"
+  "status": "AVAILABLE"
 }
 
 

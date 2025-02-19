@@ -35,16 +35,16 @@ Content-Type: application/json
 
 
 
-# ### Update a review
-# PUT http://localhost:3000/api/reviews/166a432e-8c08-4410-a7fa-92087002e234
-# Content-Type: application/json
+### Update a review------------problem
+PUT http://localhost:3000/api/reviews/23455b6f-bdc6-40dd-bc79-0da7f6fdfd68
+Content-Type: application/json
 
-# {
-#   "rating": 4,
-#   "comment": "Great event but could improve."
-# }
+{
+  "rating": 4,
+  "comment": "Great event but could improve."
+}
 
 
 ### Delete a review
-DELETE http://localhost:3000/api/reviews/db3ea04e-8fcd-4289-bed3-ac1c3e1e2fde
+DELETE http://localhost:3000/api/reviews/23455b6f-bdc6-40dd-bc79-0da7f6fdfd68
 Content-Type: application/json

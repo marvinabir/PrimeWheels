@@ -24,7 +24,7 @@ export const getBookingById = async (req: Request, res: Response) => {
     const booking = await bookingService.getBookingById(req.params.id);
     res.json(booking);
   } catch (error: any) {
-    res.status(404).json({ error: error.message });
+    res.status(404).json({ error: 'Failed to fetch the booking ' });
   }
 };
 
@@ -42,7 +42,7 @@ export const cancelBooking = async (req: Request, res: Response) => {
     const booking = await bookingService.cancelBooking(req.params.id);
     res.json(booking);
   } catch (error: any) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ error: 'Failed to cancel booking status' });
   }
 };
 

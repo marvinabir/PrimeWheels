@@ -5,7 +5,7 @@ Content-Type: application/json
 
 
 ###Get Details of a Single event
-GET http://localhost:3000/api/events/51610907-1e7e-437c-b400-c5cfeec4acd8
+GET http://localhost:3000/api/events/393e60a7-9a6f-426c-9d06-d05642708e1d
 Content-Type: application/json
 
 
@@ -15,10 +15,10 @@ POST http://localhost:3000/api/events
 Content-Type: application/json
 
 {
-  "title": "Tech Conference 2024",
-  "description": "A conference on emerging technologies.",
-  "date": "2024-12-15",
-  "location": "Silicon Valley, CA",
+  "title": "COSPLAY EVENT 2024",
+  "description": "An event on emerging cosplay.",
+  "date": "2024-12-05T10:00:00Z",
+  "location": "Tokyo, Japan",
   "imageUrl": "https://example.com/event-image.jpg",
   "organizerContact": "organizer@example.com"
 }
@@ -26,12 +26,12 @@ Content-Type: application/json
 
 
 ###Update event Information
-PUT http://localhost:3000/api/events/d7b7eae3-7435-4fc4-bb25-6b9c4d24ad14
+PUT http://localhost:3000/api/events/393e60a7-9a6f-426c-9d06-d05642708e1d
 Content-Type: application/json
 
 {
-  "title": "Updated Tech Conference",
-  "description": "Updated details about the conference.",
+  "title": "Anime con Festival 2024",
+  "description": "Updated details about the confest.",
   "imageUrl": "https://example.com/new-event-image.jpg"
 }
 
@@ -39,5 +39,5 @@ Content-Type: application/json
 
 
 ###Delete an event
-DELETE http://localhost:3000/api/events/d7b7eae3-7435-4fc4-bb25-6b9c4d24ad14
+DELETE http://localhost:3000/api/events/13fd0761-388f-4d90-b8e0-f6b0b629e869
 Content-Type: application/json

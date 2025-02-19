@@ -13,18 +13,18 @@ export const createBooking = async (data: {
   const car = await prisma.car.findUnique({ where: { id: data.carId } });
 
   if (!car) throw new Error('Car not found');
-  if (car.status !== 'available') throw new Error('Car is not available for booking');
+  if (car.status !== 'AVAILABLE') throw new Error('Car is not available for booking');
 
   const booking = await prisma.booking.create({
     data: {
       ...data,
-      status: 'confirmed',
+      status: 'CONFIRMED',
     },
   });
 
   await prisma.car.update({
     where: { id: data.carId },
-    data: { status: 'booked' },
+    data: { status: 'BOOKED' },
   });
 
   const ticket = await prisma.ticket.create({
@@ -64,7 +64,7 @@ export const getBookingById = async (id: string) => {
   return booking;
 };
 
-export const updateBookingStatus = async (id: string, status: 'confirmed' | 'canceled' | 'pending') => {
+export const updateBookingStatus = async (id: string, status: 'CONFIRMED' | 'CANCELED' | 'PENDING') => {
   return prisma.booking.update({
     where: { id },
     data: { status },
@@ -78,17 +78,17 @@ export const cancelBooking = async (id: string) => {
 
   await prisma.car.update({
     where: { id: booking.carId },
-    data: { status: 'available' },
+    data: { status: 'AVAILABLE' },
   });
 
   return prisma.booking.update({
     where: { id },
-    data: { status: 'canceled' },
+    data: { status: 'CANCELED' },
     include: { ticket: true },
   });
 };
 
-export const updateCarStatus = async (carId: string, status: 'available' | 'booked' | 'inactive') => {
+export const updateCarStatus = async (carId: string, status: 'AVAILABLE' | 'BOOKED' | 'INACTIVE') => {
   return prisma.car.update({
     where: { id: carId },
     data: { status },
