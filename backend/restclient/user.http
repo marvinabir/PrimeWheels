@@ -21,6 +21,13 @@ Content-Type: application/json
 
 
 
+### Get all users
+GET http://localhost:3000/api/users
+Content-Type: application/json
+
+
+
+
 ### Get user profile
 GET http://localhost:3000/api/users/bf5c75e5-2019-4b12-bc7c-bb7ebcf5f019/profile
 Content-Type: application/json

@@ -13,7 +13,7 @@ export class UserService {
         email: data.email,
         phone: data.phone,
         password: hashedPassword,
-        role: 'user', // Default role
+        role: 'USER', // Default role
       },
     });
   }
@@ -31,7 +31,7 @@ export class UserService {
     return { token, user };
   }
 
-  async assignRole(userId: string, role: 'user' | 'admin' | 'organizer') {
+  async assignRole(userId: string, role: 'USER' | 'ADMIN' | 'ORGANIZER') {
     return await prisma.user.update({
       where: { id: userId },
       data: { role },
@@ -78,4 +78,21 @@ export class UserService {
       data,
     });
   }
+
+
+    async getAllUsers() {
+      return await prisma.user.findMany({
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          phone: true,
+          role: true,
+          createdAt: true,
+          updatedAt: true,
+        },
+      });
+    }
+  
+
 }
