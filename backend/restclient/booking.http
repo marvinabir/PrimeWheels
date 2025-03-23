@@ -4,7 +4,7 @@ Content-Type: application/json
 
 
 ### Get details of a specific booking
-GET http://localhost:3000/api/bookings/4efd29ec-654f-45fa-aed3-0825de29c6de
+GET http://localhost:3000/api/bookings/91cb2b22-e3bd-45e1-a15b-cb9a93b1521c
 Content-Type: application/json
 
 
@@ -13,8 +13,8 @@ POST http://localhost:3000/api/bookings
 Content-Type: application/json
 
 {
-  "userId": "bf5c75e5-2019-4b12-bc7c-bb7ebcf5f019",
-  "carId": "03ec22f6-2099-4ed7-bd29-dea15a04845f",
+  "userId": "d2a6c9a3-d59d-4321-a7c9-8f9d52b9f76c",
+  "carId": "50b4131c-8e82-493d-a83c-c4c92a51ba97",
   "startDate": "2024-12-01T10:00:00Z",
   "endDate": "2024-12-05T10:00:00Z",
   "totalAmount": 500

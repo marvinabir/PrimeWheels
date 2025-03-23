@@ -17,35 +17,23 @@ model User {
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
   bookings      Booking[]
-  reviews       Review[]
   notifications Notification[]
-}
-
-enum UserRole {
-  USER
-  ADMIN
-  ORGANIZER
+  reviews       Review[]
 }
 
 model Car {
   id                 String    @id @default(uuid())
   name               String
   brand              String
-  registrationNumber String    @unique
+  registrationNumber String
   status             CarStatus @default(AVAILABLE)
   pricePerDay        Float
-  imageUrl           String? 
+  imageUrl           String?
   createdAt          DateTime  @default(now())
   updatedAt          DateTime  @updatedAt
-  bookings           Booking[]
-  reviews            Review[] 
   softDeleted        Boolean   @default(false)
-}
-
-enum CarStatus {
-  AVAILABLE
-  BOOKED
-  INACTIVE
+  bookings           Booking[]
+  reviews            Review[]
 }
 
 model Booking {
@@ -58,16 +46,10 @@ model Booking {
   status      BookingStatus @default(PENDING)
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
-  user        User          @relation(fields: [userId], references: [id])
   car         Car           @relation(fields: [carId], references: [id])
-  ticket      Ticket?
+  user        User          @relation(fields: [userId], references: [id])
   payment     Payment?
-}
-
-enum BookingStatus {
-  PENDING
-  CONFIRMED
-  CANCELED
+  ticket      Ticket?
 }
 
 model Ticket {
@@ -75,33 +57,21 @@ model Ticket {
   bookingId      String   @unique
   uniqueToken    String   @unique @default(uuid())
   createdAt      DateTime @default(now())
-  userDetails    String 
-  carDetails     String 
-  bookingDetails String 
+  userDetails    String
+  carDetails     String
+  bookingDetails String
   booking        Booking  @relation(fields: [bookingId], references: [id])
 }
 
 model Payment {
-  id            String         @id @default(uuid())
-  bookingId     String         @unique
+  id            String        @id @default(uuid())
+  bookingId     String        @unique
   amount        Float
-  status        PaymentStatus  @default(PENDING)
-  method        PaymentMethod  @default(MPESA)
-  transactionId String? 
-  createdAt     DateTime       @default(now())
-  booking       Booking        @relation(fields: [bookingId], references: [id])
-}
-
-enum PaymentStatus {
-  PENDING
-  SUCCESSFUL
-  FAILED
-}
-
-enum PaymentMethod {
-  MPESA
-  CARD
-  PAYPAL
+  status        PaymentStatus @default(PENDING)
+  method        PaymentMethod @default(MPESA)
+  transactionId String?
+  createdAt     DateTime      @default(now())
+  booking       Booking       @relation(fields: [bookingId], references: [id])
 }
 
 model Event {
@@ -110,7 +80,7 @@ model Event {
   description      String
   date             DateTime
   location         String
-  imageUrl         String? 
+  imageUrl         String?
   organizerContact String
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
@@ -123,8 +93,8 @@ model Review {
   content   String
   rating    Int      @default(5)
   createdAt DateTime @default(now())
-  user      User     @relation(fields: [userId], references: [id])
   car       Car      @relation(fields: [carId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
 }
 
 model Notification {
@@ -134,4 +104,34 @@ model Notification {
   read      Boolean  @default(false)
   createdAt DateTime @default(now())
   user      User     @relation(fields: [userId], references: [id])
+}
+
+enum UserRole {
+  USER
+  ADMIN
+  ORGANIZER
+}
+
+enum CarStatus {
+  AVAILABLE
+  BOOKED
+  INACTIVE
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELED
+}
+
+enum PaymentStatus {
+  PENDING
+  SUCCESSFUL
+  FAILED
+}
+
+enum PaymentMethod {
+  MPESA
+  CARD
+  PAYPAL
 }

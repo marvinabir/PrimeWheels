@@ -1,3 +1,18 @@
+-- CreateEnum
+CREATE TYPE "UserRole" AS ENUM ('USER', 'ADMIN', 'ORGANIZER');
+
+-- CreateEnum
+CREATE TYPE "CarStatus" AS ENUM ('AVAILABLE', 'BOOKED', 'INACTIVE');
+
+-- CreateEnum
+CREATE TYPE "BookingStatus" AS ENUM ('PENDING', 'CONFIRMED', 'CANCELED');
+
+-- CreateEnum
+CREATE TYPE "PaymentStatus" AS ENUM ('PENDING', 'SUCCESSFUL', 'FAILED');
+
+-- CreateEnum
+CREATE TYPE "PaymentMethod" AS ENUM ('MPESA', 'CARD', 'PAYPAL');
+
 -- CreateTable
 CREATE TABLE "User" (
     "id" TEXT NOT NULL,
@@ -5,7 +20,7 @@ CREATE TABLE "User" (
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
     "phone" TEXT NOT NULL,
-    "role" TEXT NOT NULL DEFAULT 'user',
+    "role" "UserRole" NOT NULL DEFAULT 'USER',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -18,7 +33,7 @@ CREATE TABLE "Car" (
     "name" TEXT NOT NULL,
     "brand" TEXT NOT NULL,
     "registrationNumber" TEXT NOT NULL,
-    "status" TEXT NOT NULL DEFAULT 'available',
+    "status" "CarStatus" NOT NULL DEFAULT 'AVAILABLE',
     "pricePerDay" DOUBLE PRECISION NOT NULL,
     "imageUrl" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -36,7 +51,7 @@ CREATE TABLE "Booking" (
     "startDate" TIMESTAMP(3) NOT NULL,
     "endDate" TIMESTAMP(3) NOT NULL,
     "totalAmount" DOUBLE PRECISION NOT NULL,
-    "status" TEXT NOT NULL DEFAULT 'pending',
+    "status" "BookingStatus" NOT NULL DEFAULT 'PENDING',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -61,8 +76,8 @@ CREATE TABLE "Payment" (
     "id" TEXT NOT NULL,
     "bookingId" TEXT NOT NULL,
     "amount" DOUBLE PRECISION NOT NULL,
-    "status" TEXT NOT NULL DEFAULT 'pending',
-    "method" TEXT NOT NULL DEFAULT 'mpesa',
+    "status" "PaymentStatus" NOT NULL DEFAULT 'PENDING',
+    "method" "PaymentMethod" NOT NULL DEFAULT 'MPESA',
     "transactionId" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
@@ -80,7 +95,6 @@ CREATE TABLE "Event" (
     "organizerContact" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
-    "organizerId" TEXT NOT NULL,
 
     CONSTRAINT "Event_pkey" PRIMARY KEY ("id")
 );
@@ -112,9 +126,6 @@ CREATE TABLE "Notification" (
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Car_registrationNumber_key" ON "Car"("registrationNumber");
-
--- CreateIndex
 CREATE UNIQUE INDEX "Ticket_bookingId_key" ON "Ticket"("bookingId");
 
 -- CreateIndex
@@ -134,9 +145,6 @@ ALTER TABLE "Ticket" ADD CONSTRAINT "Ticket_bookingId_fkey" FOREIGN KEY ("bookin
 
 -- AddForeignKey
 ALTER TABLE "Payment" ADD CONSTRAINT "Payment_bookingId_fkey" FOREIGN KEY ("bookingId") REFERENCES "Booking"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Event" ADD CONSTRAINT "Event_organizerId_fkey" FOREIGN KEY ("organizerId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Review" ADD CONSTRAINT "Review_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

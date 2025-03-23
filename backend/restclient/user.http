@@ -15,8 +15,8 @@ POST http://localhost:3000/api/users/login
 Content-Type: application/json
 
 {
-  "email": "johnsmith@example.com",
-  "password": "securepassword"
+  "email": "marvo@example.com",
+  "password": "onepiece"
 }
 
 
@@ -29,7 +29,7 @@ Content-Type: application/json
 
 
 ### Get user profile
-GET http://localhost:3000/api/users/bf5c75e5-2019-4b12-bc7c-bb7ebcf5f019/profile
+GET http://localhost:3000/api/users/d2a6c9a3-d59d-4321-a7c9-8f9d52b9f76c/profile
 Content-Type: application/json
 
 
@@ -47,7 +47,7 @@ Content-Type: application/json
 
 
 ### Get all user bookings 
-GET http://localhost:3000/api/users/bf5c75e5-2019-4b12-bc7c-bb7ebcf5f019/bookings
+GET http://localhost:3000/api/users/d2a6c9a3-d59d-4321-a7c9-8f9d52b9f76c/bookings
 Content-Type: application/json
 
 
@@ -67,8 +67,8 @@ PUT http://localhost:3000/api/users/assign-role
 Content-Type: application/json
 
 {
-  "userId": "bf5c75e5-2019-4b12-bc7c-bb7ebcf5f019",
-  "role": "USER"
+  "userId": "45503a93-e10c-4d11-816e-6b4279c32e05",
+  "role": "ORGANIZER"
 }
 
 

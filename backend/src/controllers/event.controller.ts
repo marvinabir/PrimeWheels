@@ -9,8 +9,10 @@ export class EventController {
       const event = await eventService.addEvent(req.body);
       res.status(201).json(event);
     } catch (error: any) {
+      console.error('Error adding event:', error); // Logs full error details
       res.status(400).json({ error: error.message });
     }
+  
   }
 
   async updateEvent(req: Request, res: Response) {

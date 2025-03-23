@@ -36,16 +36,12 @@ export const createCar = async (req: Request, res: Response) => {
 
     const car = await carService.createCar({ name, brand, registrationNumber, pricePerDay, imageUrl });
     res.status(201).json(car);
-  } catch (error: any) {
+  } catch (error) {
     console.error('Error creating car:', error);
-
-    if (error.message.includes('already exists')) {
-      return res.status(409).json({ error: error.message });
-    }
-
     res.status(500).json({ error: 'Failed to create car' });
   }
 };
+
 
 export const updateCar = async (req: Request, res: Response) => {
   try {

@@ -4,7 +4,7 @@ Content-Type: application/json
 
 
 ### Get Tickets by User ID ************problem
-GET http://localhost:3000/api/tickets/user/bf5c75e5-2019-4b12-bc7c-bb7ebcf5f019
+GET http://localhost:3000/api/tickets/user/d2a6c9a3-d59d-4321-a7c9-8f9d52b9f76c
 Content-Type: application/json
 
 

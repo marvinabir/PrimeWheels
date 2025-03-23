@@ -15,9 +15,9 @@ Content-Type: application/json
 
 
 {
-  "name": "Bumblebee",
-  "brand": "wildcat",
-  "registrationNumber": "2045",
+  "name": "TX",
+  "brand": "Toyota",
+  "registrationNumber": "1645",
   "pricePerDay": 100,
   "imageUrl": "https://example.com/toyota-corolla.jpg"
 }
@@ -25,16 +25,16 @@ Content-Type: application/json
 
 
 ###Update Car Information
-PUT http://localhost:3000/api/cars/a72c41b2-3dcf-4c45-ac02-7aabcfb1ee1d
+PUT http://localhost:3000/api/cars/f0bce6da-b348-409a-8ede-fa92b246f4b9
 Content-Type: application/json
 
 {
-  "name": "Toyota axio",
+  "name": "TX",
   "brand": "Toyota",
-  "registrationNumber": "2033",
+  "registrationNumber": "1645",
   "pricePerDay": 120,  
   "status": "BOOKED",
-  "imageUrl": "https://example.com/toyota-camry.jpg"
+  "imageUrl": "https://i.pinimg.com/736x/72/a9/18/72a9182b87ed72e13fec4e557de843fc.jpg"
 }
 
 
@@ -50,7 +50,7 @@ Content-Type: application/json
 
 
 ### Manually Update Car Status
-PATCH http://localhost:3000/api/bookings/car/a72c41b2-3dcf-4c45-ac02-7aabcfb1ee1d/status
+PATCH http://localhost:3000/api/bookings/car/61b32acd-6e62-4cae-9f05-d2b398ac92b4/status
 Content-Type: application/json
 
 {

@@ -27,6 +27,9 @@ app.use(cors(corsOptions));
 /**
  * Middleware to parse JSON requests
  */
+
+
+
 app.use(express.json());
 
 /**

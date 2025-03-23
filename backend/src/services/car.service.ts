@@ -22,19 +22,10 @@ export const createCar = async (data: {
   pricePerDay: number;
   imageUrl?: string;
 }) => {
-  // Check if a car with the same registration number already exists
-  const existingCar = await prisma.car.findUnique({
-    where: { registrationNumber: data.registrationNumber },
-  });
-
-  if (existingCar) {
-    throw new Error(`Car with registration number ${data.registrationNumber} already exists.`);
-  }
-
   return prisma.car.create({
     data: {
       ...data,
-      softDeleted: false, // Ensure the new car is not soft-deleted by default
+      softDeleted: false, // Ensure new car is not soft-deleted
       status: CarStatus.AVAILABLE, // Default status
     },
   });
@@ -53,11 +44,13 @@ export const updateCar = async (
   }>
 ) => {
   return prisma.car.update({
-    where: { id, softDeleted: false }, // Prevent updates on soft deleted cars
-    data,
+    where: { id, softDeleted: false }, // ✅ Prevent updates on soft deleted cars
+    data: {
+      ...data,
+      pricePerDay: data.pricePerDay !== undefined ? parseFloat(data.pricePerDay as any) || 0 : undefined, // 🛠️ FIX: Ensure `pricePerDay` is a Float
+    },
   });
 };
-
 export const softDeleteCar = async (id: string) => {
   return prisma.car.update({
     where: { id, softDeleted: false }, // Prevent soft-deleting an already deleted car

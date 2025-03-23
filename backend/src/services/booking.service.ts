@@ -65,6 +65,10 @@ export const getBookingById = async (id: string) => {
 };
 
 export const updateBookingStatus = async (id: string, status: 'CONFIRMED' | 'CANCELED' | 'PENDING') => {
+  const booking = await prisma.booking.findUnique({ where: { id } });
+
+  if (!booking) throw new Error('Booking not found');
+
   return prisma.booking.update({
     where: { id },
     data: { status },
@@ -89,6 +93,10 @@ export const cancelBooking = async (id: string) => {
 };
 
 export const updateCarStatus = async (carId: string, status: 'AVAILABLE' | 'BOOKED' | 'INACTIVE') => {
+  const car = await prisma.car.findUnique({ where: { id: carId } });
+
+  if (!car) throw new Error('Car not found');
+
   return prisma.car.update({
     where: { id: carId },
     data: { status },
